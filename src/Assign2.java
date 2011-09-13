@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -36,6 +39,10 @@ public class Assign2 {
 			String title = doc.select("#content-1 h1.heading").first().text();					
 			System.out.println(title);
 			
+			
+			 	
+			String imgSrc = doc.select("img[itemprop=photo]").first().attr("src");
+			
 			String preparation_time = doc.select("#content-1 p[itemprop=prepTime]").first().text();			
 			System.out.println(preparation_time);
 			
@@ -48,6 +55,14 @@ public class Assign2 {
 				System.out.println("* " + elm.text());
 			}
 
+			
+			 Elements method = doc.select("ol#method li > p");
+			 ArrayList<String> steps = new ArrayList<String>();
+			 for (Element step: method)
+				steps.add(step.text());
+			 
+			Pattern isHtml = Pattern.compile(".*[.]html?$");
+			 System.out.println(isHtml.matcher("Test String").matches());
 			
 			
 			
