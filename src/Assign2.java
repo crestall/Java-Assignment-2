@@ -14,8 +14,6 @@ import org.jsoup.select.Elements;
 
 public class Assign2 {
 
-	
-
 	/**
 	 * @param args
 	 */
@@ -48,19 +46,25 @@ public class Assign2 {
 				System.out.println("* " + elm.text());
 			}
 
+			File input = new File("./files/Blueberry_cake.html");
+			Document doc = Jsoup.parse(input, "UTF-8");
+
+			String title = doc.select("#content-1 h1.heading").first().text();
+
+			String imgSrc = doc.select("img[itemprop=photo]").first().attr("src");
 			
-			
-			
+			Elements method = doc.select("ol#method li > p");
+			ArrayList<String> steps = new ArrayList<String>();
+			for (Element step: method)
+				steps.add(step.text());
+
+			Pattern isHtml = Pattern.compile(".*[.]html?$");
+			System.out.println(isHtml.matcher("Test String").matches());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("exception: " + e);
 			System.exit(0);
 		}
-		
-		
-		               
-		
 	}
-
 }
