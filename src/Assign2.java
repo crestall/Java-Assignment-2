@@ -18,13 +18,22 @@ public class Assign2 {
 			File dir = new File("files");
 
 			String[] children = dir.list();
+			// Compile a regex expression to match html or htm files
+			Pattern isHtml = Pattern.compile(".*[.]html?$");
+			ArrayList<File> files = new ArrayList<File>();
 			
+			// Fill the array with all valid html files
 			for(String child: children)
 			{
-				File test = new File("files/" + child);							
+				if (isHtml.matcher(child).matches())
+					files.add(new File("files/" + child));				
 			}
 			
-			Document doc = (Document) Jsoup.parse(new File("files/Caramel & apple upside-down cake.html"), "UTF-8");
+			// Prove that there is something in the array of files
+			for (File file: files)
+				System.out.println(file);
+			
+			Document doc = Jsoup.parse(new File("files/Caramel & apple upside-down cake.html"), "UTF-8");
 									
 			String title = doc.select("#content-1 h1.heading").first().text();					
 			System.out.println(title);
@@ -51,8 +60,6 @@ public class Assign2 {
 			 for (Element step: method)
 				steps.add(step.text());
 			 
-			Pattern isHtml = Pattern.compile(".*[.]html?$");
-			 System.out.println(isHtml.matcher("Test String").matches());
 			
 			
 			
