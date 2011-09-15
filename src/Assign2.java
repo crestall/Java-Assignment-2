@@ -1,14 +1,6 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,8 +8,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Assign2 {
-
-	
 
 	/**
 	 * @param args
