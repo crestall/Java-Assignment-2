@@ -14,8 +14,7 @@ public class Assign2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
-		int a = 3;
+		
 		try {				
 			File dir = new File("files");
 
