@@ -48,5 +48,8 @@ public class Assign2 {
 			System.out.println("exception: " + e);
 			System.exit(0);
 		}
+		
+		theGui test_this = new theGui();
+		test_this.launchFrame();
 	}
 }

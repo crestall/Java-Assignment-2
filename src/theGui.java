@@ -4,15 +4,48 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import testGui.ListenCloseWdw;
+
 
 
 public class theGui {
+
+	  private Action check_action = new AbstractAction("Check hits") {
+			private static final long serialVersionUID = 1L;
+	        public void actionPerformed(ActionEvent evt) {
+	        	the_state = 0;
+	        }
+	    };
+	    
+	    private Action add_action = new AbstractAction("Add hits") {
+			private static final long serialVersionUID = 1L;
+	        public void actionPerformed(ActionEvent evt) {        	
+	        	the_save_name = new String(actionName.getText());
+	        	the_state = 1;
+	        	System.out.println("The state was changed");
+	        }
+	    };
+	    
+	    private Action save_action = new AbstractAction("Save") {
+			private static final long serialVersionUID = 1L;
+	        public void actionPerformed(ActionEvent evt) {
+	        	the_state = 2;
+	        }
+	    };
+	    
+	    
+	    private Action restore_action = new AbstractAction("Restore") {
+	 		private static final long serialVersionUID = 1L;
+	         public void actionPerformed(ActionEvent evt) {
+	        	 the_state = 3;
+	         }
+	     };
 	// Initialize all swing objects.
     private JFrame f = new JFrame("Basic GUI"); //create Frame
     private JPanel top_panel = new JPanel(); // North quadrant 
@@ -75,8 +108,5 @@ public class theGui {
         f.setVisible(true);
     }
     
-    public void trythis(){
-        testGui gui = new testGui();
-        gui.launchFrame();
-    }
+   
 }
