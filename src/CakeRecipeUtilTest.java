@@ -15,10 +15,11 @@ public class CakeRecipeUtilTest
 		ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
 		String[] tokens = {"cake", "butter", "pan", "stir", "blueberry"};
 		ArrayList<CakeRecipe> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, true, true);
-		if (matchingRecipes.size() != 1)
-			fail("Wrong number of results");
-		if (matchingRecipes.get(0).name != "Blueberry cake")
-			fail("Returned wrong cake");
+		for (CakeRecipe recipe:matchingRecipes) {
+			System.out.println(recipe.name);
+			if (recipe.name.equals("Blueberry cake")) return;
+		}
+		fail("Failed to return the blue berry cake");
 	}
 
 }

@@ -50,13 +50,18 @@ public class CakeRecipe
 
 	public boolean nameContains(String[] tokens)
 	{
-		// TODO Auto-generated method stub
+		for (String token:tokens)
+			if (name.contains(token)) return true;
+		
 		return false;
 	}
 
 	public boolean methodContains(String[] tokens)
 	{
-		// TODO Auto-generated method stub
+		for (String step:method)
+			for (String token:tokens)
+				if (step.contains(token)) return true;
+		
 		return false;
 	}
 }
