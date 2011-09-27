@@ -32,7 +32,13 @@ public class theGui {
 		        		System.out.println(word);
 		        	}		        	
 		        	System.out.println("Made it here: "+ group.getSelection().getActionCommand() + " " + actionName.getText());
-		        	ReceipeTextBox.setT
+		        try
+		        {
+		        	ReceipeTextBox.setText("testing");
+		        }catch(Exception e){
+		        	
+		        	System.exit(1);
+		        }
 	        	}else
 	        	{
 	        		System.out.println("Too many keywords entered!");	        		
@@ -47,6 +53,7 @@ public class theGui {
     //Panels
     private JPanel top_panel = new JPanel(); // North quadrant 
     private JPanel below = new JPanel(); // South quadrant
+    private JPanel bottom = new JPanel(); // South quadrant
     
     
     //Search Button
@@ -90,12 +97,14 @@ public class theGui {
         // Add Buttons                
         below.add(actionName);
         below.add(searchButton);
-       // below.add(check);        
+       
         
+        bottom.add(ReceipeTextBox);
         // Setup Main Frame
         f.getContentPane().setLayout(new BorderLayout());	
         f.getContentPane().add(top_panel, BorderLayout.NORTH);
-		f.getContentPane().add(below, BorderLayout.SOUTH);
+		f.getContentPane().add(below, BorderLayout.CENTER);
+		f.getContentPane().add(bottom, BorderLayout.SOUTH);
         
 
         
