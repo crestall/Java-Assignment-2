@@ -33,7 +33,7 @@ public class theGui {
 	        	Iterator<CakeRecipe> itr = recipes.iterator();
 	            while (itr.hasNext()) {
 	            	CakeRecipe element = itr.next();
-	            	htmlCode.append("<li>" + element.name + "</li>");
+	            	htmlCode.append("<li>" + element.cookTime + "</li>");
 	            	System.out.println(element.name);
 	            }
 	        	htmlCode.append("</ol>");

@@ -23,10 +23,10 @@ class HTMLRecipeParser extends HTMLEditorKit.ParserCallback
     public void handleText(char[] data, int pos)
     {
         if(foundName) recipe.name = new String(data);
-        if(foundPrepTime) recipe.prepTime = new String(data);
-        if(foundCookTime) recipe.cookTime = new String(data);
-        if (foundIngredient) recipe.addIngredient(new String(data));
-        if (foundMethodStep) recipe.addMethodStep(new String(data));
+        if(foundPrepTime) recipe.prepTime = Integer.parseInt(new String(data).split(" ")[0]);        
+        if(foundCookTime) recipe.cookTime = Integer.parseInt(new String(data).split(" ")[0]);        
+        if(foundIngredient) recipe.addIngredient(new String(data));
+        if(foundMethodStep) recipe.addMethodStep(new String(data));
     }
 
     public void handleSimpleTag(HTML.Tag t, MutableAttributeSet a, int pos)
