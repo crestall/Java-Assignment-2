@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -24,6 +26,21 @@ public class theGui {
 	  private Action search_action = new AbstractAction("Search") {
 			private static final long serialVersionUID = 1L;
 	        public void actionPerformed(ActionEvent evt) {	        	
+	        	
+	        	StringBuffer htmlCode = new StringBuffer();
+	        	
+	        	htmlCode.append("<ol>");
+	        	Iterator<CakeRecipe> itr = recipes.iterator();
+	            while (itr.hasNext()) {
+	            	CakeRecipe element = itr.next();
+	            	htmlCode.append("<li>" + element.name + "</li>");
+	            	System.out.println(element.name);
+	            }
+	        	htmlCode.append("</ol>");
+	        	
+	        	
+	        	
+	        	
 	        	String[] tokens = actionName.getText().split(" ");	        	
 	        	if(tokens.length <= 5)
 	        	{
@@ -34,7 +51,7 @@ public class theGui {
 		        	System.out.println("Made it here: "+ group.getSelection().getActionCommand() + " " + actionName.getText());
 		        try
 		        {
-		        	ReceipeTextBox.setText("testing");
+		        	ReceipeTextBox.setText(htmlCode.toString());
 		        }catch(Exception e){
 		        	
 		        	System.exit(1);
@@ -46,7 +63,10 @@ public class theGui {
 	        }
 	    };
 	    
-	  
+	private ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
+	
+	
+	
 	// Initialize all swing objects.
     private JFrame f = new JFrame("Recipe Searcher"); //create Frame
     
@@ -98,7 +118,7 @@ public class theGui {
         below.add(actionName);
         below.add(searchButton);
        
-        
+        ReceipeTextBox.setContentType("text/html");
         bottom.add(ReceipeTextBox);
         // Setup Main Frame
         f.getContentPane().setLayout(new BorderLayout());	
