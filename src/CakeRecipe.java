@@ -47,4 +47,16 @@ public class CakeRecipe
 			out += " "+(++i)+". "+step+"\n";
 		return out;
 	}
+
+	public boolean nameContains(String[] tokens)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean methodContains(String[] tokens)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
