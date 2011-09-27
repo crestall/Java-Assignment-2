@@ -1,14 +1,19 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
@@ -16,57 +21,75 @@ import javax.swing.JTextField;
 
 public class theGui {
 
-	  private Action check_action = new AbstractAction("Check hits") {
+	  private Action search_action = new AbstractAction("Search") {
 			private static final long serialVersionUID = 1L;
-	        public void actionPerformed(ActionEvent evt) {
-	        	the_state = 0;
+	        public void actionPerformed(ActionEvent evt) {	        	
+	        	String[] tokens = actionName.getText().split(" ");	        	
+	        	if(tokens.length <= 5)
+	        	{
+		        	for (String word : tokens)
+		        	{
+		        		System.out.println(word);
+		        	}		        	
+		        	System.out.println("Made it here: "+ group.getSelection().getActionCommand() + " " + actionName.getText());
+		        	ReceipeTextBox.setT
+	        	}else
+	        	{
+	        		System.out.println("Too many keywords entered!");	        		
+	        	}
 	        }
 	    };
 	    
-	    private Action add_action = new AbstractAction("Add hits") {
-			private static final long serialVersionUID = 1L;
-	        public void actionPerformed(ActionEvent evt) {        	
-	        	the_save_name = new String(actionName.getText());
-	        	the_state = 1;
-	        	System.out.println("The state was changed");
-	        }
-	    };
-	    
-	    private Action save_action = new AbstractAction("Save") {
-			private static final long serialVersionUID = 1L;
-	        public void actionPerformed(ActionEvent evt) {
-	        	the_state = 2;
-	        }
-	    };
-	    
-	    
-	    private Action restore_action = new AbstractAction("Restore") {
-	 		private static final long serialVersionUID = 1L;
-	         public void actionPerformed(ActionEvent evt) {
-	        	 the_state = 3;
-	         }
-	     };
+	  
 	// Initialize all swing objects.
-    private JFrame f = new JFrame("Basic GUI"); //create Frame
+    private JFrame f = new JFrame("Recipe Searcher"); //create Frame
+    
+    //Panels
     private JPanel top_panel = new JPanel(); // North quadrant 
     private JPanel below = new JPanel(); // South quadrant
     
-    private JButton check_button = new JButton(check_action);
-    private JButton add_button = new JButton(add_action);
-    private JButton save_button = new JButton(save_action);
-    private JButton restore_button = new JButton(restore_action);
+    
+    //Search Button
+    private JButton searchButton = new JButton(search_action);
+
+    
+    private ButtonGroup group = new ButtonGroup();
+    
+    //Radio Buttons
+    private JRadioButton nameButton = new JRadioButton("Name");
+    private JRadioButton methodButton = new JRadioButton("Method");
+    private JRadioButton everythingButton = new JRadioButton("Both");
+    
+    private JEditorPane  ReceipeTextBox = new JEditorPane(); 
     
     private JTextField actionName = new JTextField(20);
     
     /** Constructor for the GUI */
     public theGui(){
-	        
-        // Add Buttons
-        top_panel.add(check_button);
-        top_panel.add(add_button);
-        top_panel.add(save_button);
-        top_panel.add(restore_button);
+	    
+    	everythingButton.setMnemonic(KeyEvent.VK_B);
+    	everythingButton.setActionCommand("Both");
+    	everythingButton.setSelected(true);
+    	top_panel.add(everythingButton);
+    	
+    	nameButton.setMnemonic(KeyEvent.VK_B);  
+    	nameButton.setActionCommand("Name");
+        top_panel.add(nameButton);
+        
+        methodButton.setMnemonic(KeyEvent.VK_N);  
+        methodButton.setActionCommand("Method");
+        top_panel.add(methodButton);
+        
+    	       
+        group.add(nameButton);
+        group.add(methodButton);
+        group.add(everythingButton);
+      
+        
+        
+        // Add Buttons                
         below.add(actionName);
+        below.add(searchButton);
        // below.add(check);        
         
         // Setup Main Frame
