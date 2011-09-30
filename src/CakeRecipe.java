@@ -5,8 +5,8 @@ public class CakeRecipe
 {
 	public String name;
 	public String imgSrc;
-	public String prepTime;
-	public String cookTime;
+	public int prepTime;
+	public int cookTime;
 	private ArrayList<String> ingredients;
 	private ArrayList<String> method;
 	

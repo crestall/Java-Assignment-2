@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -24,6 +26,21 @@ public class theGui {
 	  private Action search_action = new AbstractAction("Search") {
 			private static final long serialVersionUID = 1L;
 	        public void actionPerformed(ActionEvent evt) {	        	
+	        	
+	        	StringBuffer htmlCode = new StringBuffer();
+	        	
+	        	htmlCode.append("<ol>");
+	        	Iterator<CakeRecipe> itr = recipes.iterator();
+	            while (itr.hasNext()) {
+	            	CakeRecipe element = itr.next();
+	            	htmlCode.append("<li>" + element.cookTime + "</li>");
+	            	System.out.println(element.name);
+	            }
+	        	htmlCode.append("</ol>");
+	        	
+	        	
+	        	
+	        	
 	        	String[] tokens = actionName.getText().split(" ");	        	
 	        	if(tokens.length <= 5)
 	        	{
@@ -32,7 +49,13 @@ public class theGui {
 		        		System.out.println(word);
 		        	}		        	
 		        	System.out.println("Made it here: "+ group.getSelection().getActionCommand() + " " + actionName.getText());
-		        	ReceipeTextBox.setT
+		        try
+		        {
+		        	ReceipeTextBox.setText(htmlCode.toString());
+		        }catch(Exception e){
+		        	
+		        	System.exit(1);
+		        }
 	        	}else
 	        	{
 	        		System.out.println("Too many keywords entered!");	        		
@@ -40,13 +63,17 @@ public class theGui {
 	        }
 	    };
 	    
-	  
+	private ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
+	
+	
+	
 	// Initialize all swing objects.
     private JFrame f = new JFrame("Recipe Searcher"); //create Frame
     
     //Panels
     private JPanel top_panel = new JPanel(); // North quadrant 
     private JPanel below = new JPanel(); // South quadrant
+    private JPanel bottom = new JPanel(); // South quadrant
     
     
     //Search Button
@@ -90,12 +117,14 @@ public class theGui {
         // Add Buttons                
         below.add(actionName);
         below.add(searchButton);
-       // below.add(check);        
-        
+       
+        ReceipeTextBox.setContentType("text/html");
+        bottom.add(ReceipeTextBox);
         // Setup Main Frame
         f.getContentPane().setLayout(new BorderLayout());	
         f.getContentPane().add(top_panel, BorderLayout.NORTH);
-		f.getContentPane().add(below, BorderLayout.SOUTH);
+		f.getContentPane().add(below, BorderLayout.CENTER);
+		f.getContentPane().add(bottom, BorderLayout.SOUTH);
         
 
         
