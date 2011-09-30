@@ -69,12 +69,12 @@ public class CakeRecipeUtil
 		return recipes;
 	}
 
-	public static ArrayList<CakeRecipe> search(ArrayList<CakeRecipe> recipes, String[] tokens, boolean searchName, boolean searchMethod)
+	public static ArrayList<SearchResult<CakeRecipe>> search(ArrayList<CakeRecipe> recipes, String[] tokens, boolean searchName, boolean searchMethod)
 	{
-		ArrayList<CakeRecipe> results = new ArrayList<CakeRecipe>();
+		ArrayList<SearchResult<CakeRecipe>> results = new ArrayList<SearchResult<CakeRecipe>>();
 		for (CakeRecipe recipe : recipes) {
 			if ((searchName && recipe.nameContains(tokens)) || (searchMethod && recipe.methodContains(tokens)))
-				results.add(recipe);
+				results.add(new SearchResult(hits ,recipe));
 		}
 		return results;
 	}
