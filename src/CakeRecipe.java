@@ -48,20 +48,31 @@ public class CakeRecipe
 		return out;
 	}
 
-	public boolean nameContains(String[] tokens)
+	public int countInName(String[] tokens)
 	{
-		for (String token:tokens)
-			if (name.contains(token)) return true;
-		
-		return false;
+		int hits = 0;
+		for (String token:tokens) {
+			int idx = 0;
+			while (idx != -1){
+				idx = name.indexOf(token, idx);
+				hits++;
+			}
+			hits--;
+		}
+		return hits;
 	}
 
-	public boolean methodContains(String[] tokens)
+	public int countInMethod(String[] tokens)
 	{
-		for (String step:method)
-			for (String token:tokens)
-				if (step.contains(token)) return true;
-		
-		return false;
+		int hits = 0;
+		for (String step:method) {
+			int idx = 0;
+			while (idx != -1){
+				idx = step.indexOf(step, idx);
+				hits++;
+			}
+			hits--;
+		}
+		return hits;
 	}
 }

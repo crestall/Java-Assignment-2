@@ -73,8 +73,10 @@ public class CakeRecipeUtil
 	{
 		ArrayList<SearchResult<CakeRecipe>> results = new ArrayList<SearchResult<CakeRecipe>>();
 		for (CakeRecipe recipe : recipes) {
-			if ((searchName && recipe.nameContains(tokens)) || (searchMethod && recipe.methodContains(tokens)))
-				results.add(new SearchResult(hits ,recipe));
+			int hits = 0;
+			if (searchName) hits += recipe.countInName(tokens);
+			if (searchMethod) hits += recipe.countInMethod(tokens);
+			if (hits != 0) results.add(new SearchResult<CakeRecipe>(hits ,recipe));
 		}
 		return results;
 	}
