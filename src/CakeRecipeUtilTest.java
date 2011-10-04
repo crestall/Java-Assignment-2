@@ -21,5 +21,4 @@ public class CakeRecipeUtilTest
 		}
 		fail("Failed to return the blue berry cake");
 	}
-
 }

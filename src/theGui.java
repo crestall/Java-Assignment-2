@@ -15,7 +15,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
+
 import javax.swing.JTextField;
 
 
@@ -41,25 +41,31 @@ public class theGui {
 	        	
 	        	
 	        	
-	        	String[] tokens = actionName.getText().split(" ");	        	
+	        	String[] tokens = actionName.getText().split(" ");	   
 	        	if(tokens.length <= 5)
 	        	{
-		        	for (String word : tokens)
-		        	{
-		        		System.out.println(word);
-		        	}		        	
-		        	System.out.println("Made it here: "+ group.getSelection().getActionCommand() + " " + actionName.getText());
-		        try
-		        {
-		        	ReceipeTextBox.setText(htmlCode.toString());
-		        }catch(Exception e){
 		        	
-		        	System.exit(1);
-		        }
+		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, true, true);
+		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
+		    			System.out.println(result.item.name+" > "+result.hits);
+		    			if (result.item.name.equals("Blueberry cake"))
+		    			{
+		    				 try
+		 			        {
+		 			        	ReceipeTextBox.setText(htmlCode.toString());
+		 			        }
+		    				 catch(Exception e){		 			     	
+		 			        	System.exit(1);
+		 			        }
+		    				
+		    			}
+		    				
+		    		}
 	        	}else
 	        	{
 	        		System.out.println("Too many keywords entered!");	        		
 	        	}
+	        		   
 	        }
 	    };
 	    
