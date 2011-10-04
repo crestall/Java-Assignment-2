@@ -52,11 +52,11 @@ public class CakeRecipe
 	{
 		int hits = 0;
 		for (String token:tokens) {
-			int idx = 0;
-			while (idx != -1){
-				idx = name.indexOf(token, idx);
+			int idx = -1;
+			do {
+				idx = name.indexOf(token, idx+1);
 				hits++;
-			}
+			} while (idx != -1);
 			hits--;
 		}
 		return hits;
@@ -66,12 +66,14 @@ public class CakeRecipe
 	{
 		int hits = 0;
 		for (String step:method) {
-			int idx = 0;
-			while (idx != -1){
-				idx = step.indexOf(step, idx);
-				hits++;
+			for (String token:tokens) {
+				int idx = -1;
+				do {
+					idx = step.indexOf(token, idx+1);
+					hits++;
+				} while (idx != -1);
+				hits--;
 			}
-			hits--;
 		}
 		return hits;
 	}
