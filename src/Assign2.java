@@ -10,8 +10,8 @@ public class Assign2 {
 
 		try {	
 			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
-			for (CakeRecipe recipe:recipes)
-				System.out.println(recipe);
+			//for (CakeRecipe recipe:recipes)
+				//System.out.println(recipe);
 
    			theGui test_this = new theGui();
    			test_this.launchFrame();

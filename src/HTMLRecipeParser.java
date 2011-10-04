@@ -22,7 +22,7 @@ class HTMLRecipeParser extends HTMLEditorKit.ParserCallback
 
     public void handleText(char[] data, int pos)
     {
-        if(foundName) recipe.name = new String(data);
+        if(foundName) recipe.setName(new String(data));
         if(foundPrepTime) recipe.prepTime = Integer.parseInt(new String(data).split(" ")[0]);        
         if(foundCookTime) recipe.cookTime = Integer.parseInt(new String(data).split(" ")[0]);        
         if(foundIngredient) recipe.addIngredient(new String(data));
@@ -32,10 +32,7 @@ class HTMLRecipeParser extends HTMLEditorKit.ParserCallback
     public void handleSimpleTag(HTML.Tag t, MutableAttributeSet a, int pos)
     {
     	if(t == HTML.Tag.IMG && a.containsAttribute("itemprop", "photo"))
-    		recipe.imgSrc = (String) a.getAttribute(HTML.Attribute.SRC);
-
-    	if(t == HTML.Tag.IMG && a.containsAttribute("itemprop", "photo"))
-    		recipe.imgSrc = (String) a.getAttribute(HTML.Attribute.SRC);
+    		recipe.setImgSrc(((String) a.getAttribute(HTML.Attribute.SRC)).replace('\\', '/'));
     }
     
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos)
