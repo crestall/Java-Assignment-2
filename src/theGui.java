@@ -1,5 +1,9 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Panel;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,11 +15,17 @@ import java.util.Iterator;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 
 import javax.swing.JTextField;
 
@@ -23,7 +33,8 @@ import javax.swing.JTextField;
 
 
 public class theGui {
-
+	private JList<CakeRecipe> searchResults;
+	
 	  private Action search_action = new AbstractAction("Search") {
 			private static final long serialVersionUID = 1L;
 	        public void actionPerformed(ActionEvent evt) {	        	
@@ -35,7 +46,6 @@ public class theGui {
 	            while (itr.hasNext()) {
 	            	CakeRecipe element = itr.next();
 	            	htmlCode.append("<li>" + element.cookTime + "</li>");
-	            	//System.out.println(element.name);
 	            }
 	        	htmlCode.append("</ol>");
 	        	
@@ -46,22 +56,35 @@ public class theGui {
 	        	if(tokens.length <= 5)
 	        	{
 		        	
+	        		searchResults.removeAll();
 		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, true, true);
 		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
 		    				 try
-		 			        {
-		 			        	ReceipeTextBox.setText(ReceipeTextBox.getText() + result.item.getImageName() + "\n");
+		 			        {		    					     					 
+		 			        	ReceipeTextBox.setText(ReceipeTextBox.getText() + result.item.getImageName() + "\n");		 			        			 			        	
+		 			        	//RecipeLabel label = new RecipeLabel("files/"+result.item.getImgName(),result.item.getName());		 			        			 			        	
+		 			        	theModel.addElement(result.item);	
 		 			        	
-		 			        	JFrame frame = new JFrame(result.item.getImageName());
-		 			        	Panel panel = new ShowReceipePreview(result.item);
-		 			        	frame.getContentPane().add(panel);
+		 			        	//System.out.println("number: " + theModel.getSize());		 			        			 			        			 			        			 			        	
+		 			        	searchResults.revalidate();
+		 			        	all_search_results.revalidate();
+		 			        	f.revalidate();
+		 			        	
+		 			        	//label.setLocation(29, 37);
+		 			        	//f.getContentPane().add(searchResults);
+		 			        //   f.setVisible(true);
+		 			        	//JFrame frame = new JFrame(result.item.getImageName());
+		 			        //	Panel panel = new ShowReceipePreview(result.item);		 			        	
+		 			        	//f.getContentPane().add(panel,BorderLayout.CENTER);
+		 			        	/*
+		 			        	(frame.getContentPane().add(panel);
 		 			        	frame.setSize(500, 500);
 		 			        	frame.setVisible(true);
-		 			        	
+		 			        	*/
 		 			        }
 		    				 catch(Exception e){	
-		    					 
-		 			        	System.exit(1);
+		    					 System.out.println("Exception Occured:" + e.toString());
+		 			        	//System.exit(1);
 		 			        }		    						    					    				
 		    		}
 	        	}else
@@ -83,8 +106,8 @@ public class theGui {
     private JPanel top_panel = new JPanel(); // North quadrant 
     private JPanel below = new JPanel(); // South quadrant
     private JPanel bottom = new JPanel(); // South quadrant
-    
-    
+    //private JPanel all_search_results = new JPanel(); // South quadrant
+    private JScrollPane all_search_results;
     //Search Button
     private JButton searchButton = new JButton(search_action);
 
@@ -99,10 +122,23 @@ public class theGui {
     private JEditorPane  ReceipeTextBox = new JEditorPane(); 
     
     private JTextField actionName = new JTextField(20);
+    private DefaultListModel<CakeRecipe>  theModel =  new DefaultListModel<CakeRecipe>();
     
     /** Constructor for the GUI */
     public theGui(){
-	    
+    	
+    searchResults = new JList<CakeRecipe>();
+    searchResults.setVisibleRowCount(2);
+    searchResults.setModel(theModel);
+    RecipeListRenderer therenderer = new RecipeListRenderer();
+    therenderer.setPreferredSize(new Dimension(100,50));
+  	searchResults.setCellRenderer(therenderer);
+  	 
+
+  	
+  	all_search_results = new JScrollPane(searchResults);
+    all_search_results.setAutoscrolls(true);
+    	 
     	everythingButton.setMnemonic(KeyEvent.VK_B);
     	everythingButton.setActionCommand("Both");
     	everythingButton.setSelected(true);
@@ -122,20 +158,23 @@ public class theGui {
         group.add(everythingButton);
       
         
-        
         // Add Buttons                
-        below.add(actionName);
-        below.add(searchButton);
+        bottom.add(actionName);
+        bottom.add(searchButton);
        
    //     ReceipeTextBox.setContentType("text/html");
-        ReceipeTextBox.setSize(500, 800);
+       // ReceipeTextBox.setSize(50, 50);
         bottom.add(ReceipeTextBox);
         // Setup Main Frame
         f.getContentPane().setLayout(new BorderLayout());	
         f.getContentPane().add(top_panel, BorderLayout.NORTH);
 		f.getContentPane().add(below, BorderLayout.CENTER);
 		f.getContentPane().add(bottom, BorderLayout.SOUTH);
-        
+		
+		
+		
+		
+        f.getContentPane().add(all_search_results,BorderLayout.CENTER);
 
         
 		// Allows the Swing App to be closed
@@ -157,11 +196,13 @@ public class theGui {
         }
     }
 	
-    public void launchFrame(){
+    @SuppressWarnings("deprecation")
+	public void launchFrame(){
         // Display Frame
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.pack(); //Adjusts panel to components for display
-        
+      //  f.pack(); //Adjusts panel to components for display
+        //f.resize(1000, 800);
+        f.resize(new Dimension(1000, 500));
 		//should be full screen - Works
 		//f.setUndecorated(true);  
         //f.setExtendedState(Frame.MAXIMIZED_BOTH);
