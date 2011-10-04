@@ -14,8 +14,8 @@ public class CakeRecipeUtilTest
 		String[] tokens = {"cake", "butter", "pan", "stir", "blueberry"};
 		ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, true, true);
 		for (SearchResult<CakeRecipe> result:matchingRecipes) {
-			System.out.println(result.item.name+" > "+result.hits);
-			if (result.item.name.equals("Blueberry cake")) return;
+			System.out.println(result.item.getName()+" > "+result.hits);
+			if (result.item.getName().equals("Blueberry cake")) return;
 		}
 		fail("Failed to return the blueberry cake");
 	}

@@ -13,8 +13,7 @@ public class Assign2 {
 			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
 			for (CakeRecipe recipe:recipes)
 			{
-				//TODO: Change name to getName()
-				FileWriter file = new FileWriter(recipe.name+".txt");
+				FileWriter file = new FileWriter(recipe.getName()+".txt");
 				file.write(recipe.output());
 				file.close();
 			}

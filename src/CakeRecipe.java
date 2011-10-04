@@ -3,8 +3,9 @@ import java.util.ArrayList;
 
 public class CakeRecipe
 {
-	public String name;
-	public String imgSrc;
+	private String name;
+	private String imgName;
+	private String imgSrc;
 	public int prepTime;
 	public int cookTime;
 	private ArrayList<String> ingredients;
@@ -14,6 +15,42 @@ public class CakeRecipe
 	{
 		ingredients = new ArrayList<String>();
 		method = new ArrayList<String>();
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setImgSrc(String imgSrc)
+	{
+		this.imgSrc = imgSrc;
+		setImgName(imgSrc.substring(imgSrc.lastIndexOf('/')+1));
+	}	
+
+	public void setImgName(String imgName)
+	{
+		this.imgName = imgName;
+	}
+	
+	public String getImgName()
+	{
+		return imgName;
+	}
+
+	public String getImageName()
+	{
+		return imgName;
+	}
+	
+	public String getImageSrc()
+	{
+		return imgSrc;
 	}
 	
 	public void addIngredient(String ingredientName)

@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -34,11 +35,11 @@ public class theGui {
 	            while (itr.hasNext()) {
 	            	CakeRecipe element = itr.next();
 	            	htmlCode.append("<li>" + element.cookTime + "</li>");
-	            	System.out.println(element.name);
+	            	//System.out.println(element.name);
 	            }
 	        	htmlCode.append("</ol>");
 	        	
-	        	
+	        	ReceipeTextBox.setText("");
 	        	
 	        	
 	        	String[] tokens = actionName.getText().split(" ");	   
@@ -47,17 +48,21 @@ public class theGui {
 		        	
 		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, true, true);
 		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
-		    			System.out.println(result.item.name+" > "+result.hits);
-		    			if (result.item.name.equals("Blueberry cake"))
-		    			{
 		    				 try
 		 			        {
-		 			        	ReceipeTextBox.setText(htmlCode.toString());
+		 			        	ReceipeTextBox.setText(ReceipeTextBox.getText() + result.item.getImageName() + "\n");
+		 			        	
+		 			        	JFrame frame = new JFrame(result.item.getImageName());
+		 			        	Panel panel = new ShowReceipePreview(result.item);
+		 			        	frame.getContentPane().add(panel);
+		 			        	frame.setSize(500, 500);
+		 			        	frame.setVisible(true);
+		 			        	
 		 			        }
-		    				 catch(Exception e){		 			     	
+		    				 catch(Exception e){	
+		    					 
 		 			        	System.exit(1);
-		 			        }		    				
-		    			}		    				
+		 			        }		    						    					    				
 		    		}
 	        	}else
 	        	{
@@ -122,7 +127,8 @@ public class theGui {
         below.add(actionName);
         below.add(searchButton);
        
-        ReceipeTextBox.setContentType("text/html");
+   //     ReceipeTextBox.setContentType("text/html");
+        ReceipeTextBox.setSize(500, 800);
         bottom.add(ReceipeTextBox);
         // Setup Main Frame
         f.getContentPane().setLayout(new BorderLayout());	
