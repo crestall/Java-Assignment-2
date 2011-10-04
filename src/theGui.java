@@ -56,10 +56,8 @@ public class theGui {
 		 			        }
 		    				 catch(Exception e){		 			     	
 		 			        	System.exit(1);
-		 			        }
-		    				
-		    			}
-		    				
+		 			        }		    				
+		    			}		    				
 		    		}
 	        	}else
 	        	{
