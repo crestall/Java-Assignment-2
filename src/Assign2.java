@@ -1,3 +1,4 @@
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class Assign2 {
@@ -11,7 +12,12 @@ public class Assign2 {
 		try {	
 			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
 			for (CakeRecipe recipe:recipes)
-				System.out.println(recipe);
+			{
+				//TODO: Change name to getName()
+				FileWriter file = new FileWriter(recipe.name+".txt");
+				file.write(recipe.output());
+				file.close();
+			}
 
    			theGui test_this = new theGui();
    			test_this.launchFrame();

@@ -34,6 +34,45 @@ public class CakeRecipe
 		return method;
 	}	
 	
+	public String output() {
+		StringBuffer out = new StringBuffer();
+		out.append("********************\n");
+		out.append("Name of the cake\n");
+		out.append(name+"\n");
+		out.append("********************\n");
+		out.append("Name of the cake’s image\n");
+		out.append(imgSrc+"\n");
+		out.append("********************\n");
+		out.append("Preparation time\n");
+		out.append(prepTime+" minutes\n");
+		out.append("********************\n");
+		out.append("Cooking time\n");
+		out.append(cookTime+" minutes\n");
+		out.append("********************\n");
+		out.append("Ingredients\n");
+		for (String ingredient: ingredients)
+			out.append(" * "+ingredient+"\n");
+		out.append("********************\n");
+		out.append("Method\n");
+		int i = 0;
+		for (String step: method)
+			out.append(" "+(++i)+". "+step+"\n");
+		out.append("********************\n");
+		
+		int idx = -1;
+		do {
+			int next = out.indexOf("\n",idx+1);
+			if (next-idx > 60) {
+				int nl = out.lastIndexOf(" ",idx+61);
+				out.setCharAt(nl, '\n');
+				next = idx+61;
+			}
+			idx = next;
+		} while (idx>0);
+		
+		return out.toString().replace("\n", "\r\n");
+	}
+	
 	public String toString() {
 		String out = "";
 		out += "Recipe for '"+name+"' Prep Time: "+prepTime+", Cook Time: "+cookTime+"\n";
