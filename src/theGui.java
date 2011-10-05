@@ -56,7 +56,7 @@ public class theGui {
 	        	if(tokens.length <= 5)
 	        	{
 		        	
-	        		searchResults.removeAll();
+	        		theModel.clear();
 		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, true, true);
 		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
 		    				 try
