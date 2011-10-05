@@ -1,7 +1,7 @@
-.jar
-.class
+*.jar
+*.class
 /bin
-.classpath
-.project
-.settings
-.txt
+*.classpath
+*.project
+*.settings
+*.txt
