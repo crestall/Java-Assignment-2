@@ -7,15 +7,21 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
 
 class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static final RecipeViewer recipe_viewer = new RecipeViewer();
+	
 	@Override
 	public Component getListCellRendererComponent(
 			JList<? extends CakeRecipe> list, CakeRecipe value, int index,
@@ -38,15 +44,27 @@ class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> 
 		g.dispose();
 				
 		ImageIcon theIcon = new ImageIcon(resizedImage);				
-		setIcon(theIcon);
-//setText("files/"+ value.getImageSrc());
-		setText(value.getName());
 		
+//setText("files/"+ value.getImageSrc());
+		
+		setText(value.getName());
+	    setIcon(theIcon);
 		   if (isSelected) {
 			      System.out.println("Selected: "+ value.getName());
 			      
-			    }
-		
+			    	  recipe_viewer.displayCakeRecipe(value);
+			    	  
+			     
+			      
+		   }
+		   
+		   if (cellHasFocus) {
+			      System.out.println("Focus: "+ value.getName());
+			      
+		   }
+		   
+		   setBackground(isSelected ? Color.red : Color.blue);
+	         setForeground(isSelected ? Color.blue : Color.black);
 		
 		return this;
 	}

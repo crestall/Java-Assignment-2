@@ -1,9 +1,5 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Panel;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,14 +15,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
-
 import javax.swing.JTextField;
 
 
@@ -66,9 +58,9 @@ public class theGui {
 		 			        	theModel.addElement(result.item);	
 		 			        	
 		 			        	//System.out.println("number: " + theModel.getSize());		 			        			 			        			 			        			 			        	
-		 			        	searchResults.revalidate();
-		 			        	all_search_results.revalidate();
-		 			        	f.revalidate();
+		 			        	//searchResults.revalidate();
+		 			        //	all_search_results.revalidate();
+		 			        	//f.revalidate();
 		 			        	
 		 			        	//label.setLocation(29, 37);
 		 			        	//f.getContentPane().add(searchResults);
@@ -128,10 +120,11 @@ public class theGui {
     public theGui(){
     	
     searchResults = new JList<CakeRecipe>();
-    searchResults.setVisibleRowCount(2);
+  //  searchResults.setVisibleRowCount(2);
     searchResults.setModel(theModel);
     RecipeListRenderer therenderer = new RecipeListRenderer();
-    therenderer.setPreferredSize(new Dimension(100,50));
+    
+ //   therenderer.setPreferredSize(new Dimension(100,50));
   	searchResults.setCellRenderer(therenderer);
   	 
 
