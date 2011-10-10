@@ -28,7 +28,7 @@ public class RecipeViewer {
 		f.setBackground(Color.white);
 		
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    f.resize(new Dimension(1000, 500));
+	    f.resize(new Dimension(1100, 700));
 	    
 	    f.getContentPane().setLayout(new BorderLayout());
 	    
@@ -55,7 +55,7 @@ public class RecipeViewer {
 		ArrayList<String> theIngredients = theRecipe.getIngredients();
 		
 		StringBuffer ingredientsList = new StringBuffer();
-		ingredientsList.append("<ol>");
+		ingredientsList.append("<h2><u>Ingredients</u></h2><ol>");
 		for(String Ingredient : theIngredients)
 		{
 			ingredientsList.append("<li><p>"+Ingredient+"</p></li>");
@@ -68,7 +68,7 @@ public class RecipeViewer {
 		ArrayList<String> theMethod = theRecipe.getMethod();
 		
 		StringBuffer methodList = new StringBuffer();
-		methodList.append("<table width=\"1000\"><tr><td><ol>");
+		methodList.append("<tr><td><h2><u>Method</u></h2><br><table width=\"1000\"><tr><td><ol>");
 		for(String method : theMethod)
 		{
 			methodList.append("<li><p>"+method+"</p></li>");
@@ -84,9 +84,10 @@ public class RecipeViewer {
 		top_panel.add(title);		
 		west_panel.add(Ingredients);
 		
-		
+		f.getContentPane().removeAll();
 		f.getContentPane().add(top_panel, BorderLayout.NORTH);
 		f.getContentPane().add(west_panel, BorderLayout.WEST);
+		f.getContentPane().add(new ImagePanel("files/"+theRecipe.getImageName()), BorderLayout.CENTER);
 		f.getContentPane().add(bottom, BorderLayout.SOUTH);
 	    f.setVisible(true);
 	}
