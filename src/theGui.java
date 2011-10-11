@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import javax.swing.AbstractAction;
@@ -55,6 +56,8 @@ public class theGui {
 	        		}
 	        		
 		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, searchName, searchMethod);
+		        	//Collections.sort(matchingRecipes);
+		        	
 		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
 		    				 try
 		 			        {		    					     					 		 			        			 			        			 			        	

@@ -25,50 +25,34 @@ class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> 
 	@Override
 	public Component getListCellRendererComponent(
 			JList<? extends CakeRecipe> list, CakeRecipe value, int index,
-			boolean isSelected, boolean cellHasFocus) {
+			boolean isSelected, boolean cellHasFocus) {	
 		
-		//RecipeLabel aLabel = new RecipeLabel(value.getImageName(), value.getName());
-		//System.out.println("made it in here");
-		//ImageIcon theIcon = new ImageIcon("files/"+ value.getImgName());
-		//theIcon.setImage(new Image())
-		
-		
-		BufferedImage resizedImage = new BufferedImage(100, 50,BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = resizedImage.createGraphics();
-		try {
-			g.drawImage(ImageIO.read(new File("files/"+ value.getImgName() ))  , 0, 0, 100, 50, null);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		g.dispose();
+		ImageIcon theIcon = new ImageIcon(resize_image(value));						
 				
-		ImageIcon theIcon = new ImageIcon(resizedImage);				
-		
-//setText("files/"+ value.getImageSrc());
-		
 		setText(value.getName());
 	    setIcon(theIcon);
-		   if (isSelected) {
-			      System.out.println("Selected: "+ value.getName());
-			      
-			    	  recipe_viewer.displayCakeRecipe(value);
-			    	  
-			     
-			      
-		   }
-		   
-		   if (cellHasFocus) {
-			      System.out.println("Focus: "+ value.getName());
-			      
-		   }
-		   
-		   setBackground(isSelected ? Color.red : Color.blue);
-	         setForeground(isSelected ? Color.blue : Color.black);
-		
+	    
+		if (isSelected) {			      
+		    recipe_viewer.displayCakeRecipe(value);
+		}
+		   			   
+		setBackground(isSelected ? Color.red : Color.blue);
+	    setForeground(isSelected ? Color.blue : Color.black);		
 		return this;
-	}
-
+	}		
 	
+	
+	private BufferedImage resize_image(CakeRecipe thevalue)
+	{
+		BufferedImage resizedImage = new BufferedImage(100, 50,BufferedImage.TYPE_INT_ARGB);		
+		Graphics2D g = resizedImage.createGraphics();		
+		try {
+			g.drawImage(ImageIO.read(new File("files/"+ thevalue.getImgName() ))  , 0, 0, 100, 50, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return resizedImage;
+	}
 	
 }

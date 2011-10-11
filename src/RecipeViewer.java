@@ -25,7 +25,7 @@ public class RecipeViewer {
 	public RecipeViewer()
 	{
 		f = new JFrame("RecipeViewer");
-		f.setBackground(Color.white);
+		
 		
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    f.resize(new Dimension(1100, 700));
@@ -83,6 +83,7 @@ public class RecipeViewer {
 		west_panel.add(Ingredients);
 		
 		f.getContentPane().removeAll();
+		f.getContentPane().setBackground(Color.white);
 		f.getContentPane().add(top_panel, BorderLayout.NORTH);
 		f.getContentPane().add(west_panel, BorderLayout.WEST);
 		f.getContentPane().add(new ImagePanel("files/"+theRecipe.getImageName()), BorderLayout.CENTER);
