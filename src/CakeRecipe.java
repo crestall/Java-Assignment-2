@@ -6,8 +6,8 @@ public class CakeRecipe
 	private String name;
 	private String imgName;
 	private String imgSrc;
-	public int prepTime;
-	public int cookTime;
+	private int prepTime;
+	private int cookTime;
 	private ArrayList<String> ingredients;
 	private ArrayList<String> method;
 	
@@ -53,6 +53,26 @@ public class CakeRecipe
 		return imgSrc;
 	}
 	
+	public int getPrepTime()
+	{
+		return prepTime;
+	}
+
+	public void setPrepTime(int prepTime)
+	{
+		this.prepTime = prepTime;
+	}
+
+	public int getCookTime()
+	{
+		return cookTime;
+	}
+
+	public void setCookTime(int cookTime)
+	{
+		this.cookTime = cookTime;
+	}
+
 	public void addIngredient(String ingredientName)
 	{
 		ingredients.add(ingredientName);
