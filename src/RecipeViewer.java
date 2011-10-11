@@ -41,16 +41,11 @@ public class RecipeViewer {
 	    Ingredients.setEditable(false);
 	    
 	    Method.setContentType("text/html");	    
-	    Method.setEditable(false);
-	    
-	    
-	    
-	    		
+	    Method.setEditable(false);  		
 	}
 	public void displayCakeRecipe(CakeRecipe theRecipe)
 	{		
-		title.setText("<h1>"+theRecipe.getName()+"</h1>");
-		
+		title.setText("<h1>"+theRecipe.getName()+"</h1>");		
 		
 		ArrayList<String> theIngredients = theRecipe.getIngredients();
 		
@@ -75,13 +70,16 @@ public class RecipeViewer {
 		}
 		methodList.append("</ol></td></tr></table>");
 		
-		Method.setText(methodList.toString());
-				
-		
+		Method.setText(methodList.toString());						
 	    Method.setAutoscrolls(true);
 	    
+	    bottom.removeAll();
 		bottom.add(Method);		
+		
+		top_panel.removeAll();
 		top_panel.add(title);		
+		
+		west_panel.removeAll();
 		west_panel.add(Ingredients);
 		
 		f.getContentPane().removeAll();
@@ -90,11 +88,13 @@ public class RecipeViewer {
 		f.getContentPane().add(new ImagePanel("files/"+theRecipe.getImageName()), BorderLayout.CENTER);
 		f.getContentPane().add(bottom, BorderLayout.SOUTH);
 	    f.setVisible(true);
+	    f.repaint();
+	    f.revalidate();
+	    
 	}
 	
 	public boolean isOpen()
 	{		
 		return f.isVisible();		
 	}
-
 }
