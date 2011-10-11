@@ -10,7 +10,7 @@ public class Assign2 {
 	public static void main(String[] args) {
 
 		try {	
-			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
+			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory(args[0]);
 			for (CakeRecipe recipe:recipes)
 			{
 				FileWriter file = new FileWriter(recipe.getName()+".txt");
@@ -18,8 +18,8 @@ public class Assign2 {
 				file.close();
 			}
 
-   			theGui test_this = new theGui();
-   			test_this.launchFrame();
+   			Gui theGui = new Gui();
+   			theGui.launchFrame();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
