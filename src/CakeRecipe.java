@@ -126,11 +126,12 @@ public class CakeRecipe
 
 	public int countInName(String[] tokens)
 	{
+		String nameLower = name.toLowerCase();
 		int hits = 0;
 		for (String token:tokens) {
 			int idx = -1;
 			do {
-				idx = name.indexOf(token, idx+1);
+				idx = nameLower.indexOf(token, idx+1);
 				hits++;
 			} while (idx != -1);
 			hits--;
@@ -142,10 +143,11 @@ public class CakeRecipe
 	{
 		int hits = 0;
 		for (String step:method) {
+			String stepLower = step.toLowerCase();
 			for (String token:tokens) {
 				int idx = -1;
 				do {
-					idx = step.indexOf(token, idx+1);
+					idx = stepLower.indexOf(token, idx+1);
 					hits++;
 				} while (idx != -1);
 				hits--;
