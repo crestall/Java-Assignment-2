@@ -20,11 +20,12 @@ public class ImagePanel extends JPanel{
     	   System.out.println("Couldn't read picture file");
     	   System.exit(0);
        }
+       
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters
+        g.drawImage(image, 0, 0, null); 
 
     }
 
