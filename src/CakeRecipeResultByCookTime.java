@@ -5,6 +5,6 @@ public class CakeRecipeResultByCookTime implements Comparator<SearchResult<CakeR
 {
 	public int compare(SearchResult<CakeRecipe> o1, SearchResult<CakeRecipe> o2)
 	{
-		return Integer.compare(o1.item.cookTime, o2.item.cookTime);
+		return Integer.compare(o1.item.getCookTime(), o2.item.getCookTime());
 	}
 }

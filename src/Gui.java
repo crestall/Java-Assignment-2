@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 
 
 
-public class theGui {
+public class Gui {
 	private JList<CakeRecipe> searchResults;
 	
 	  private Action search_action = new AbstractAction("Search") {
@@ -88,7 +88,7 @@ public class theGui {
     private DefaultListModel<CakeRecipe>  theModel =  new DefaultListModel<CakeRecipe>();
     
     /** Constructor for the GUI */
-    public theGui(){
+    public Gui(){
     	
 	    searchResults = new JList<CakeRecipe>();
 	    searchResults.setModel(theModel);

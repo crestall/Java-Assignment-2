@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -6,8 +7,8 @@ public class CakeRecipe
 	private String name;
 	private String imgName;
 	private String imgSrc;
-	public int prepTime;
-	public int cookTime;
+	private int prepTime;
+	private int cookTime;
 	private ArrayList<String> ingredients;
 	private ArrayList<String> method;
 	
@@ -53,6 +54,26 @@ public class CakeRecipe
 		return imgSrc;
 	}
 	
+	public int getPrepTime()
+	{
+		return prepTime;
+	}
+
+	public void setPrepTime(int prepTime)
+	{
+		this.prepTime = prepTime;
+	}
+
+	public int getCookTime()
+	{
+		return cookTime;
+	}
+
+	public void setCookTime(int cookTime)
+	{
+		this.cookTime = cookTime;
+	}
+
 	public void addIngredient(String ingredientName)
 	{
 		ingredients.add(ingredientName);
@@ -154,5 +175,35 @@ public class CakeRecipe
 			}
 		}
 		return hits;
+	}
+
+	public boolean isValid()
+	{
+		// TODO Auto-generated method stub
+		if (name == null)
+		{
+			//TODO: Report Error, recipe missing name
+			return false;
+		}
+		if (ingredients.size() == 0)
+		{
+			//TODO: Report Error, recipe missing ingredients
+			return false;
+		}
+		if (method.size() == 0)
+		{
+			//TODO: Report Error, recipe missing method
+			return false;
+		}
+		if (imgSrc != null)
+		{
+			//TODO: Report Error, recipe image not avaliable
+			if (!(new File(imgSrc)).exists())
+			{
+				imgName = null;
+				imgSrc = null;
+			}
+		}
+		return true;
 	}
 }
