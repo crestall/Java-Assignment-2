@@ -1,6 +1,7 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -17,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -105,17 +109,24 @@ public class Gui {
     /** Constructor for the GUI */
     public Gui(){
     	
+    	
+    	
 	    searchResults = new JList<CakeRecipe>();
 	    searchResults.setModel(theModel);
 	    
 	    title.setFont(new Font("Arial",Font.PLAIN,14));
 		
 		title.setText("Welcome to our Cake Searcher! \r\n" +					
-					  "by Adrian Cowan and Christopher Restall");					    	    
+					  "by Adrian Cowan and Christopher Restall");		
+		
+		title.setEditable(false);
 	    
 	    RecipeListRenderer therenderer = new RecipeListRenderer();	  
 	    therenderer.setTheGui(f);
 	    searchResults.setCellRenderer(therenderer);
+	    
+	    
+	    searchButton.registerKeyboardAction(search_action,KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0,false),JComponent.WHEN_IN_FOCUSED_WINDOW);
 	    
 	    searchResults.addListSelectionListener(recipeClick);
 	    searchResults.setAutoscrolls(true);

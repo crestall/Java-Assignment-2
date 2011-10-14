@@ -37,7 +37,7 @@ public class RecipeViewer {
 		title.setFont(new Font("Arial",Font.PLAIN,30));
 		title.setHorizontalAlignment(JTextField.CENTER);
 		title.setSize(300, 100);
-		
+		f.setTitle(theRecipe.getName());
 		Method.setLineWrap(true);
 		Ingredients.setLineWrap(true);
 		
