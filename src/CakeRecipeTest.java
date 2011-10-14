@@ -48,7 +48,7 @@ public class CakeRecipeTest
 		recipe.setImgName("thisFileDoesNotExist.jpg");
 		
 		assertEquals(expectedValidity, recipe.isValid());
-		assertEquals(expectedImageSrc, recipe.getImageSrc());
+		assertEquals(expectedImageSrc, recipe.getImageDir());
 		assertEquals(expectedImageName, recipe.getImageName());
 	}
 
