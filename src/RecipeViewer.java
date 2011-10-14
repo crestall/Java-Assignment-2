@@ -1,97 +1,84 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JList;
+import javax.swing.JTextArea;
+
+
 
 
 public class RecipeViewer {
 	
 	
 	private JFrame f = null;
-	private JPanel top_panel = new JPanel(); // North quadrant 
-    private JPanel west_panel = new JPanel(); // West quadrant
-    private JPanel bottom = new JPanel(); // South quadrant
-    
-    private JEditorPane title = new JEditorPane();
-    private JEditorPane Ingredients = new JEditorPane();
-    private JEditorPane Method = new JEditorPane(); 
-    
-    
-
+	
+    private JTextArea title = new JTextArea();
+    private JList<String> Ingredients = new JList<String>();
+    private JList<String> Method = new JList<String>(); 
+	
 	public RecipeViewer()
 	{
-		f = new JFrame("RecipeViewer");
-		
-		
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    f.resize(new Dimension(1100, 700));
-	    
-	    f.getContentPane().setLayout(new BorderLayout());
-	    
-	    title.setBounds(0, 0, 300, 50);
-	    title.setContentType("text/html");
+		f = new JFrame("RecipeViewer");					       	    
 	    title.setEditable(false);
-	    
-	    Ingredients.setContentType("text/html");
-	    Ingredients.setSize(50, 50);
-	    Ingredients.setEditable(false);
-	    
-	    Method.setContentType("text/html");	    
-	    Method.setEditable(false);  		
+		
 	}
 	public void displayCakeRecipe(CakeRecipe theRecipe)
 	{		
-		title.setText("<h1>"+theRecipe.getName()+"</h1>");		
+		title.setText(theRecipe.getName());		
 		
 		ArrayList<String> theIngredients = theRecipe.getIngredients();
+		DefaultListModel<String>  ingredientsModel =  new DefaultListModel<String>();
+		Ingredients.setModel(ingredientsModel);				
+		ingredientsModel.clear();
+		for(String ingredient: theIngredients)
+			ingredientsModel.addElement(ingredient);
 		
-		StringBuffer ingredientsList = new StringBuffer();
-		ingredientsList.append("<h2><u>Ingredients</u></h2><ol>");
-		for(String Ingredient : theIngredients)
-		{
-			ingredientsList.append("<li><p>"+Ingredient+"</p></li>");
-		}
-		ingredientsList.append("</ol>");
-		
-		Ingredients.setText(ingredientsList.toString());
-		Ingredients.setAutoscrolls(true);
 		
 		ArrayList<String> theMethod = theRecipe.getMethod();
-		
-		StringBuffer methodList = new StringBuffer();
-		methodList.append("<tr><td><h2><u>Method</u></h2><br><table width=\"1000\"><tr><td><ol>");
-		for(String method : theMethod)
-		{
-			methodList.append("<li><p>"+method+"</p></li>");
-		}
-		methodList.append("</ol></td></tr></table>");
-		
-		Method.setText(methodList.toString());						
+		DefaultListModel<String>  methodModel =  new DefaultListModel<String>();
+		Method.setModel(methodModel);				
+		methodModel.clear();
+		for(String method_step: theMethod)
+			methodModel.addElement(method_step);
+												
 	    Method.setAutoscrolls(true);
+		
+		ImagePanel picture = new ImagePanel("files/"+theRecipe.getImageName());	 
+	    GroupLayout layout = new GroupLayout(f.getContentPane());	  
+	    layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);        
+	    layout.setHorizontalGroup(
+	    		   layout.createParallelGroup()
+	    		   		.addComponent(title)
+	    		   		.addGroup(	    				   
+	    				   	layout.createSequentialGroup()	    				   		
+	    				   		.addComponent(Ingredients)
+	    				   		.addComponent(picture)	    				   		
+	    				   )
+	    				 .addComponent(Method)
+	    				 );	    		
+
+	    layout.setVerticalGroup(
+    		   layout.createSequentialGroup()
+    		   	.addComponent(title)
+    		    .addGroup(
+    		    		  layout.createParallelGroup()
+    		    		  	.addComponent(Ingredients)
+    		    		  	.addComponent(picture)    		    		  	  		    		  	
+    		    		  )	    		      
+    		    .addComponent(Method)
+	    		);
 	    
-	    bottom.removeAll();
-		bottom.add(Method);		
+	    f.getContentPane().setLayout(layout);		
 		
-		top_panel.removeAll();
-		top_panel.add(title);		
 		
-		west_panel.removeAll();
-		west_panel.add(Ingredients);
-		
-		f.getContentPane().removeAll();
-		f.getContentPane().setBackground(Color.white);
-		f.getContentPane().add(top_panel, BorderLayout.NORTH);
-		f.getContentPane().add(west_panel, BorderLayout.WEST);
-		f.getContentPane().add(new ImagePanel("files/"+theRecipe.getImageName()), BorderLayout.CENTER);
-		f.getContentPane().add(bottom, BorderLayout.SOUTH);
 	    f.setVisible(true);
 	    f.repaint();
-	    f.revalidate();
-	    
+	    f.revalidate();	    
 	}
 	
 	public boolean isOpen()
