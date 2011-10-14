@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -19,7 +20,15 @@ class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final RecipeViewer recipeViewer = new RecipeViewer();
+	private JFrame theGui;
+	
+	
+	public void setTheGui(JFrame theGui) {
+		this.theGui = theGui;
+	}
+
+
+	
 	
 	@Override
 	public Component getListCellRendererComponent(
@@ -30,10 +39,6 @@ class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> 
 				
 		setText(value.getName());
 	    setIcon(theIcon);
-	    
-		if (isSelected) {			      
-		    recipeViewer.displayCakeRecipe(value);
-		}
 		   			   
 		setBackground(isSelected ? Color.red : Color.blue);
 	    setForeground(isSelected ? Color.blue : Color.black);		

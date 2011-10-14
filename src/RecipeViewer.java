@@ -1,13 +1,12 @@
-import java.awt.BorderLayout;
 import java.awt.Font;
-import java.util.ArrayList;
-
-import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
-import javax.swing.JEditorPane;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 
 
@@ -15,71 +14,97 @@ import javax.swing.JTextArea;
 public class RecipeViewer {
 	
 	
-	private JFrame f = null;
+	private JDialog f = null;
 	
-    private JTextArea title = new JTextArea();
-    private JList<String> Ingredients = new JList<String>();
-    private JList<String> Method = new JList<String>(); 
 	
-	public RecipeViewer()
+    private JTextField title = new JTextField();
+    private JTextArea Ingredients = new JTextArea();
+    private JTextArea Method = new JTextArea(); 
+	
+	public RecipeViewer(JFrame caller)
 	{
-		f = new JFrame("RecipeViewer");
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    title.setEditable(false);
-	    f.setBounds(0, 0, 500, 500);		
+		f = new JDialog(caller,"RecipeViewer",true);
+		
+		f.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+	    title.setEditable(false);	    
+	 
 	}
 	public void displayCakeRecipe(CakeRecipe theRecipe)
 	{		
+		f.getContentPane().removeAll();
+		
 		title.setText(theRecipe.getName());		
-		title.setFont(new Font("Arial",Font.PLAIN,22));
+		title.setFont(new Font("Arial",Font.PLAIN,30));
+		title.setHorizontalAlignment(JTextField.CENTER);
+		title.setSize(300, 100);
 		
-		ArrayList<String> theIngredients = theRecipe.getIngredients();
-		DefaultListModel<String>  ingredientsModel =  new DefaultListModel<String>();
-		Ingredients.setModel(ingredientsModel);				
-		ingredientsModel.clear();
-		for(String ingredient: theIngredients)
-			ingredientsModel.addElement(ingredient);
-				
-		ArrayList<String> theMethod = theRecipe.getMethod();
-		DefaultListModel<String>  methodModel =  new DefaultListModel<String>();
-		Method.setModel(methodModel);				
-		methodModel.clear();
-		for(String method_step: theMethod)
-			methodModel.addElement(method_step);
+		Method.setLineWrap(true);
+		Ingredients.setLineWrap(true);
+		
+		Ingredients.setText("");
+		for(String ingredient: theRecipe.getIngredients())
+		{
+			Ingredients.append(ingredient + "\n");
+		}		
+		
+		Method.setText("");		
+		int step = 1;
+		for(String method_step: theRecipe.getMethod())
+		{
+			Method.append("Step "+ step + ": " + method_step + "\n\n");
+			step++;
+		}
 												
-	    Method.setAutoscrolls(true);
 		
-		ImagePanel picture = new ImagePanel(theRecipe.getImageDir() + theRecipe.getImageName());	 
+		Ingredients.setAutoscrolls(true);
+		JScrollPane ingredientScroll = new JScrollPane(Ingredients);
+		ingredientScroll.setWheelScrollingEnabled(true);
+		
+		
+		JScrollPane methodScroll = new JScrollPane(Method);
+		methodScroll.setSize(500, 200);
+		methodScroll.setWheelScrollingEnabled(true);
+		
+		JLabel ingredients_label = new JLabel("Ingredients:");
+		JLabel method_label = new JLabel("Method:");
+		
+		ImagePanel picture = new ImagePanel(theRecipe.getImageDir() + theRecipe.getImageName());
+				
 	    GroupLayout layout = new GroupLayout(f.getContentPane());	  
-	    layout.setAutoCreateGaps(true);
+	    
+	    layout.setAutoCreateGaps(true);	    
         layout.setAutoCreateContainerGaps(true);        
 	    layout.setHorizontalGroup(
 	    		   layout.createParallelGroup()
 	    		   		.addComponent(title)
+	    		   		.addComponent(ingredients_label)
 	    		   		.addGroup(	    				   
 	    				   	layout.createSequentialGroup()	    				   		
-	    				   		.addComponent(Ingredients)
+	    				   		.addComponent(ingredientScroll,150,250,350)
 	    				   		.addComponent(picture)	    				   		
 	    				   )
-	    				 .addComponent(Method)
+	    				 .addComponent(method_label)
+	    				 .addComponent(methodScroll)
 	    				 );	    		
 
 	    layout.setVerticalGroup(
     		   layout.createSequentialGroup()
     		   	.addComponent(title)
+    		   	.addComponent(ingredients_label)
     		    .addGroup(
     		    		  layout.createParallelGroup()
-    		    		  	.addComponent(Ingredients)
+    		    		  	.addComponent(ingredientScroll)
     		    		  	.addComponent(picture)    		    		  	  		    		  	
     		    		  )	    		      
-    		    .addComponent(Method)
+    		    .addComponent(method_label)
+    		    .addComponent(methodScroll)
 	    		);
 	    
 	    f.getContentPane().setLayout(layout);		
 		
-		
-	    f.setVisible(true);
+	    f.setSize(800, 600);
 	    f.repaint();
+	    f.setVisible(true);
 	    f.revalidate();	    
 	}
 	

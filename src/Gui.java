@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -13,18 +14,30 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 
 
 public class Gui {
 	private JList<CakeRecipe> searchResults;
+	private RecipeViewer recipeViewer = null;
+	
+	private ListSelectionListener recipeClick = new ListSelectionListener(){
+		public void valueChanged(ListSelectionEvent e) 
+		{
+			if(e.getValueIsAdjusting())
+				recipeViewer.displayCakeRecipe(theModel.get(searchResults.getSelectedIndex()));
+		}
+	};
 	
 	  private Action search_action = new AbstractAction("Search") {
 			private static final long serialVersionUID = 1L;
-	        public void actionPerformed(ActionEvent evt) {	        	
-	        		      
+	        public void actionPerformed(ActionEvent evt) {	        		        	
 	        	String[] tokens = actionName.getText().split(" ");	   
 	        	if(tokens.length <= 5)
 	        	{		        	
@@ -79,7 +92,9 @@ public class Gui {
     private JButton searchButton = new JButton(search_action);
 
     
-    private JLabel title = new JLabel("Our Project");
+    
+    private JTextPane title = new JTextPane();
+    
         
     private JComboBox<String[]> searchComboBox;
     private String [] searchOptions = new String[3];
@@ -93,8 +108,17 @@ public class Gui {
 	    searchResults = new JList<CakeRecipe>();
 	    searchResults.setModel(theModel);
 	    
-	    RecipeListRenderer therenderer = new RecipeListRenderer();	    
+	    title.setFont(new Font("Arial",Font.PLAIN,14));
+		
+		title.setText("Welcome to our Cake Searcher! \r\n" +					
+					  "by Adrian Cowan and Christopher Restall");					    	    
+	    
+	    RecipeListRenderer therenderer = new RecipeListRenderer();	  
+	    therenderer.setTheGui(f);
 	    searchResults.setCellRenderer(therenderer);
+	    
+	    searchResults.addListSelectionListener(recipeClick);
+	    searchResults.setAutoscrolls(true);
 	
 		all_search_results = new JScrollPane(searchResults);
 		all_search_results.setAutoscrolls(true);
@@ -105,7 +129,9 @@ public class Gui {
 		searchOptions[2] = "Both";
 		
 		searchComboBox = new JComboBox(searchOptions);
+	    JLabel combo_label = new JLabel("Please select which attributes you would like to search:");
 	    
+	    JLabel keywords_label = new JLabel("Please enter your keywords:");
 	    
 	    GroupLayout layout = new GroupLayout(f.getContentPane());	  
 	    
@@ -116,25 +142,34 @@ public class Gui {
 	    		   layout.createParallelGroup()
 	    		   		.addComponent(title)
 	    		   		.addGroup(	    				   
-	    				   	layout.createSequentialGroup()
-	    				   		.addGroup(layout.createSequentialGroup()
-	    				   		.addComponent(searchComboBox)
+	    		   				layout.createSequentialGroup()	    				   		
+	    				   		.addComponent(combo_label)
+	    				   		.addComponent(searchComboBox)	    				   	
+	    				   		)
+	    				 .addGroup(
+	    						 layout.createSequentialGroup()
+	    				   		.addComponent(keywords_label)
 	    				   		.addComponent(actionName)
-	    				   		.addComponent(searchButton))
-	    				   )
-	    				 .addComponent(searchResults)
+	    				   		.addComponent(searchButton)
+	    				   		)	    				   	
+	    				 .addComponent(all_search_results)
 	    		);
 
 	    layout.setVerticalGroup(
     		   layout.createSequentialGroup()
-    		   	.addComponent(title)
-    		      .addGroup(
-    		    		  layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-    		    		  	.addComponent(searchComboBox)
-    		    		  	.addComponent(actionName)
-    		    		  	.addComponent(searchButton)    		    		  	
-    		    		  )	    		      
-    		    .addComponent(searchResults)
+    		   		.addComponent(title,40,45,50)
+    		   		.addGroup(
+    		   					layout.createParallelGroup()
+    		   					.addComponent(combo_label)	
+    		   					.addComponent(searchComboBox,15,15,20)    		    		  		    		  	
+    		   				)
+    		    	.addGroup(
+    		    				layout.createParallelGroup()
+    		    				.addComponent(keywords_label)
+    		    				.addComponent(actionName,15,15,20)
+  		    		  			.addComponent(searchButton,15,15,20)    	
+    		    		  )
+    		    	.addComponent(all_search_results)
 	    		);
 	    f.getContentPane().setLayout(layout);
 	    f.addWindowListener(new ListenCloseWdw());
@@ -158,7 +193,7 @@ public class Gui {
         // Display Frame
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setBounds(0, 0, 500, 500);
-		
+		recipeViewer = new RecipeViewer(f);
         f.setVisible(true);
     }
     
