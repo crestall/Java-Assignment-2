@@ -45,8 +45,8 @@ class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> 
 	{
 		BufferedImage resizedImage = new BufferedImage(100, 50,BufferedImage.TYPE_INT_ARGB);		
 		Graphics2D g = resizedImage.createGraphics();		
-		try {
-			g.drawImage(ImageIO.read(new File("files/"+ thevalue.getImgName() ))  , 0, 0, 100, 50, null);
+		try {			
+			g.drawImage(ImageIO.read(new File(thevalue.getImageDir() + thevalue.getImageName()) )  , 0, 0, 100, 50, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		

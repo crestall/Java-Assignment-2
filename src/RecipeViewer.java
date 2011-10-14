@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -22,13 +23,15 @@ public class RecipeViewer {
 	
 	public RecipeViewer()
 	{
-		f = new JFrame("RecipeViewer");					       	    
+		f = new JFrame("RecipeViewer");
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    title.setEditable(false);
-		
+	    f.setBounds(0, 0, 500, 500);		
 	}
 	public void displayCakeRecipe(CakeRecipe theRecipe)
 	{		
 		title.setText(theRecipe.getName());		
+		title.setFont(new Font("Arial",Font.PLAIN,22));
 		
 		ArrayList<String> theIngredients = theRecipe.getIngredients();
 		DefaultListModel<String>  ingredientsModel =  new DefaultListModel<String>();
@@ -36,8 +39,7 @@ public class RecipeViewer {
 		ingredientsModel.clear();
 		for(String ingredient: theIngredients)
 			ingredientsModel.addElement(ingredient);
-		
-		
+				
 		ArrayList<String> theMethod = theRecipe.getMethod();
 		DefaultListModel<String>  methodModel =  new DefaultListModel<String>();
 		Method.setModel(methodModel);				
@@ -47,7 +49,7 @@ public class RecipeViewer {
 												
 	    Method.setAutoscrolls(true);
 		
-		ImagePanel picture = new ImagePanel("files/"+theRecipe.getImageName());	 
+		ImagePanel picture = new ImagePanel(theRecipe.getImageDir() + theRecipe.getImageName());	 
 	    GroupLayout layout = new GroupLayout(f.getContentPane());	  
 	    layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);        

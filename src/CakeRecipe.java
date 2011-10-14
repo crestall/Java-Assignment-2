@@ -48,7 +48,7 @@ public class CakeRecipe
 		return imgName;
 	}
 	
-	public String getImageSrc()
+	public String getImageDir()
 	{
 		return imgDir;
 	}
