@@ -32,7 +32,10 @@ class HTMLRecipeParser extends HTMLEditorKit.ParserCallback
     public void handleSimpleTag(HTML.Tag t, MutableAttributeSet a, int pos)
     {
     	if(t == HTML.Tag.IMG && a.containsAttribute("itemprop", "photo"))
-    		recipe.setImgSrc(((String) a.getAttribute(HTML.Attribute.SRC)).replace('\\', '/'));
+    	{
+    		String imgSrc = ((String) a.getAttribute(HTML.Attribute.SRC));
+    		recipe.setImgName(imgSrc.substring(imgSrc.lastIndexOf('/')+1));
+    	}
     }
     
     public void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos)

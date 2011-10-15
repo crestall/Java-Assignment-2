@@ -44,7 +44,8 @@ public class CakeRecipeTest
 		recipe.addMethodStep("Step 1");
 		recipe.addMethodStep("Step 2");
 		recipe.addMethodStep("Step 3");
-		recipe.setImgSrc("./thisFileDoesNotExist.jpg");
+		recipe.setImgDir("./");
+		recipe.setImgName("thisFileDoesNotExist.jpg");
 		
 		assertEquals(expectedValidity, recipe.isValid());
 		assertEquals(expectedImageSrc, recipe.getImageSrc());

@@ -6,7 +6,7 @@ public class CakeRecipe
 {
 	private String name;
 	private String imgName;
-	private String imgSrc;
+	private String imgDir;
 	private int prepTime;
 	private int cookTime;
 	private ArrayList<String> ingredients;
@@ -28,10 +28,9 @@ public class CakeRecipe
 		return name;
 	}
 
-	public void setImgSrc(String imgSrc)
+	public void setImgDir(String imgDir)
 	{
-		this.imgSrc = imgSrc;
-		setImgName(imgSrc.substring(imgSrc.lastIndexOf('/')+1));
+		this.imgDir = imgDir;
 	}	
 
 	public void setImgName(String imgName)
@@ -51,7 +50,7 @@ public class CakeRecipe
 	
 	public String getImageSrc()
 	{
-		return imgSrc;
+		return imgDir;
 	}
 	
 	public int getPrepTime()
@@ -99,7 +98,7 @@ public class CakeRecipe
 		out.append(name+"\n");
 		out.append("********************\n");
 		out.append("Name of the cake’s image\n");
-		out.append(imgSrc+"\n");
+		out.append(imgName+"\n");
 		out.append("********************\n");
 		out.append("Preparation time\n");
 		out.append(prepTime+" minutes\n");
@@ -134,7 +133,7 @@ public class CakeRecipe
 	public String toString() {
 		String out = "";
 		out += "Recipe for '"+name+"' Prep Time: "+prepTime+", Cook Time: "+cookTime+"\n";
-		out += "Image <"+imgSrc+">\n";
+		out += "Image <"+imgName+">\n";
 		out += "Ingredients:\n";
 		for (String ingredient: ingredients)
 			out += " * "+ingredient+"\n";
@@ -195,13 +194,13 @@ public class CakeRecipe
 			//TODO: Report Error, recipe missing method
 			return false;
 		}
-		if (imgSrc != null)
+		if (imgName != null)
 		{
 			//TODO: Report Error, recipe image not avaliable
-			if (!(new File(imgSrc)).exists())
+			if (!(new File(imgDir+imgName)).exists())
 			{
 				imgName = null;
-				imgSrc = null;
+				imgDir = null;
 			}
 		}
 		return true;

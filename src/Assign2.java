@@ -10,11 +10,13 @@ public class Assign2 {
 	public static void main(String[] args) {
 
 		try {	
-			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory(args[0]);
+			String directory = args[0];
+			//TODO: Check directoy is valid
+			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory(directory);
 			if (recipes.size() == 0)
 			{
 				//TODO: Create custom exception type
-				throw new Exception("No files found in directory: "+args[0]);
+				throw new Exception("No files found in directory: "+directory);
 			}
 			for (CakeRecipe recipe:recipes)
 			{

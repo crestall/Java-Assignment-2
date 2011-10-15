@@ -13,9 +13,9 @@ import javax.swing.text.html.parser.ParserDelegator;
 public class CakeRecipeUtil
 {
 
-	public static ArrayList<CakeRecipe> parseDirectory(String string)
+	public static ArrayList<CakeRecipe> parseDirectory(String directory)
 	{			
-		File dir = new File(string);
+		File dir = new File(directory);
 
 		String[] children = dir.list();
 		// Compile a regex expression to match HTML or HTM files
@@ -26,7 +26,7 @@ public class CakeRecipeUtil
 		for(String child: children)
 		{
 			if (isHtml.matcher(child).matches())
-				htmlFiles.add(new File(string + "/" + child));				
+				htmlFiles.add(new File(directory + "/" + child));				
 		}
 
 		HTMLEditorKit.Parser parser = new ParserDelegator();
@@ -46,6 +46,7 @@ public class CakeRecipeUtil
 				continue;
 			}
 			CakeRecipe recipe = new CakeRecipe();
+			recipe.setImgDir(directory+"/");
    			try
 			{
 				parser.parse(reader, new HTMLRecipeParser(recipe), true);
