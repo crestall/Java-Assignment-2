@@ -50,4 +50,46 @@ public class CakeRecipeTest
 		assertEquals(expectedImageSrc, recipe.getImageSrc());
 		assertEquals(expectedImageName, recipe.getImageName());
 	}
+
+	@Test
+	public void testIsValid4()
+	{
+		CakeRecipe recipe = new CakeRecipe();
+		boolean expectedValidity = false;
+		
+		recipe.setName("My Recipe");
+		recipe.addIngredient("Stuff");
+		recipe.addIngredient("Other Stuff");
+		
+		assertEquals(expectedValidity, recipe.isValid());
+	}
+	
+	@Test
+	public void testIsValid5()
+	{
+		CakeRecipe recipe = new CakeRecipe();		
+		boolean expected = false;
+		
+		recipe.setName("My Recipe");
+		recipe.addMethodStep("Step 1");
+		recipe.addMethodStep("Step 2");
+		recipe.addMethodStep("Step 3");
+		
+		assertEquals(expected, recipe.isValid());
+	}
+	
+	@Test
+	public void testIsValid6()
+	{
+		CakeRecipe recipe = new CakeRecipe();		
+		boolean expected = false;
+		
+		recipe.addIngredient("Stuff");
+		recipe.addIngredient("Other Stuff");
+		recipe.addMethodStep("Step 1");
+		recipe.addMethodStep("Step 2");
+		recipe.addMethodStep("Step 3");
+		
+		assertEquals(expected, recipe.isValid());
+	}
 }
