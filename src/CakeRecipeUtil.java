@@ -64,7 +64,8 @@ public class CakeRecipeUtil
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-   			recipes.add(recipe);
+   			if (recipe.isValid())
+   				recipes.add(recipe);
 		}
 		return recipes;
 	}

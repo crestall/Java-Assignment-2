@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -174,5 +175,35 @@ public class CakeRecipe
 			}
 		}
 		return hits;
+	}
+
+	public boolean isValid()
+	{
+		// TODO Auto-generated method stub
+		if (name == null)
+		{
+			//TODO: Report Error, recipe missing name
+			return false;
+		}
+		if (ingredients.size() == 0)
+		{
+			//TODO: Report Error, recipe missing ingredients
+			return false;
+		}
+		if (method.size() == 0)
+		{
+			//TODO: Report Error, recipe missing method
+			return false;
+		}
+		if (imgSrc != null)
+		{
+			//TODO: Report Error, recipe image not avaliable
+			if (!(new File(imgSrc)).exists())
+			{
+				imgName = null;
+				imgSrc = null;
+			}
+		}
+		return true;
 	}
 }

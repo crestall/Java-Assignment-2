@@ -8,7 +8,7 @@ import org.junit.Test;
 public class CakeRecipeUtilTest
 {
 	@Test
-	public void searchTest()
+	public void testSearch()
 	{
 		ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
 		String[] tokens = {"cake", "butter", "pan", "stir", "blueberry"};
