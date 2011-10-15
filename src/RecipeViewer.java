@@ -24,7 +24,7 @@ public class RecipeViewer {
 	public RecipeViewer(JFrame caller)
 	{
 		f = new JDialog(caller,"RecipeViewer",true);
-		
+		f.setModal(false);
 		f.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 	    title.setEditable(false);	    
 	 
