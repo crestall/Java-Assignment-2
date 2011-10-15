@@ -1,24 +1,17 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -39,13 +32,13 @@ public class Gui {
 	        		
 	        		boolean searchName,searchMethod;
 	        		
-	        		if(group.getSelection().getActionCommand().equals("Name"))
+	        		if(searchComboBox.getSelectedItem().equals("Name"))
 	        		{
 	        			searchName = true;
 	        			searchMethod = false;
 	        			
 	        		}else{
-	        			if(group.getSelection().getActionCommand().equals("Method"))
+	        			if(searchComboBox.getSelectedItem().equals("Method"))
 		        		{
 		        			searchName = false;
 		        			searchMethod = true;
@@ -70,6 +63,7 @@ public class Gui {
 		    		}
 	        	}else
 	        	{
+	        		
 	        		System.out.println("Too many keywords entered!");	        		
 	        	}
 	        		   
@@ -77,28 +71,18 @@ public class Gui {
 	    };
 	    
 	private ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
-	
-	
-	
+		
 	// Initialize all swing objects.
     private JFrame f = new JFrame("Recipe Searcher"); //create Frame
     
-    //Panels
-    private JPanel top_panel = new JPanel(); // North quadrant 
-    private JPanel below = new JPanel(); // South quadrant
-    private JPanel bottom = new JPanel(); // South quadrant
-
     private JScrollPane all_search_results;
     private JButton searchButton = new JButton(search_action);
 
-    private ButtonGroup group = new ButtonGroup();
     
-    //Radio Buttons
-    private JRadioButton nameButton = new JRadioButton("Name");
-    private JRadioButton methodButton = new JRadioButton("Method");
-    private JRadioButton everythingButton = new JRadioButton("Both");
-    
-    
+    private JLabel title = new JLabel("Our Project");
+        
+    private JComboBox<String[]> searchComboBox;
+    private String [] searchOptions = new String[3];
     
     private JTextField actionName = new JTextField(20);
     private DefaultListModel<CakeRecipe>  theModel =  new DefaultListModel<CakeRecipe>();
@@ -115,38 +99,44 @@ public class Gui {
 		all_search_results = new JScrollPane(searchResults);
 		all_search_results.setAutoscrolls(true);
 		 
-		everythingButton.setMnemonic(KeyEvent.VK_B);
-		everythingButton.setActionCommand("Both");
-		everythingButton.setSelected(true);
-		top_panel.add(everythingButton);
 		
-		nameButton.setMnemonic(KeyEvent.VK_B);  
-		nameButton.setActionCommand("Name");
-	    top_panel.add(nameButton);
+		searchOptions[0] = "Name";
+		searchOptions[1] = "Method";
+		searchOptions[2] = "Both";
+		
+		searchComboBox = new JComboBox(searchOptions);
 	    
-	    methodButton.setMnemonic(KeyEvent.VK_N);  
-	    methodButton.setActionCommand("Method");
-	    top_panel.add(methodButton);        
-		       
-	    group.add(nameButton);
-	    group.add(methodButton);
-	    group.add(everythingButton);
-	  
 	    
-	    // Add Buttons                
-	    bottom.add(actionName);
-	    bottom.add(searchButton);
-	   
-	    // Setup Main Frame
-	    f.getContentPane().setLayout(new BorderLayout());	
-	    f.getContentPane().add(top_panel, BorderLayout.NORTH);
-		f.getContentPane().add(below, BorderLayout.CENTER);
-		f.getContentPane().add(bottom, BorderLayout.SOUTH);
-		
-		
-		
-		
-	    f.getContentPane().add(all_search_results,BorderLayout.CENTER);
+	    GroupLayout layout = new GroupLayout(f.getContentPane());	  
+	    
+	    layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        
+	    layout.setHorizontalGroup(
+	    		   layout.createParallelGroup()
+	    		   		.addComponent(title)
+	    		   		.addGroup(	    				   
+	    				   	layout.createSequentialGroup()
+	    				   		.addGroup(layout.createSequentialGroup()
+	    				   		.addComponent(searchComboBox)
+	    				   		.addComponent(actionName)
+	    				   		.addComponent(searchButton))
+	    				   )
+	    				 .addComponent(searchResults)
+	    		);
+
+	    layout.setVerticalGroup(
+    		   layout.createSequentialGroup()
+    		   	.addComponent(title)
+    		      .addGroup(
+    		    		  layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+    		    		  	.addComponent(searchComboBox)
+    		    		  	.addComponent(actionName)
+    		    		  	.addComponent(searchButton)    		    		  	
+    		    		  )	    		      
+    		    .addComponent(searchResults)
+	    		);
+	    f.getContentPane().setLayout(layout);
 	    f.addWindowListener(new ListenCloseWdw());
 			
         
@@ -167,7 +157,8 @@ public class Gui {
 	public void launchFrame(){
         // Display Frame
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setBounds(0, 0, 500, 300);
+		f.setBounds(0, 0, 500, 500);
+		
         f.setVisible(true);
     }
     
