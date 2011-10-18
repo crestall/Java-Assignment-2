@@ -11,7 +11,6 @@ public class Assign2 {
 
 		try {	
 			String directory = args[0];
-			//TODO: Check directoy is valid
 			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory(directory);
 			if (recipes.size() == 0)
 			{
@@ -20,15 +19,16 @@ public class Assign2 {
 			}
 			for (CakeRecipe recipe:recipes)
 			{
+				//TODO: Add try catch for file io errors
 				FileWriter file = new FileWriter(recipe.getName()+".txt");
-				file.write(recipe.output());
+				recipe.writeToFile(file);
 				file.close();
 			}
 			
    			Gui theGui = new Gui();
    			theGui.launchFrame();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			//TODO: Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("exception: " + e);
 			System.exit(0);

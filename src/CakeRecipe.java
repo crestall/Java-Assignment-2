@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -91,7 +93,7 @@ public class CakeRecipe
 		return method;
 	}	
 	
-	public String output() {
+	public void writeToFile(FileWriter file) throws IOException {
 		StringBuffer out = new StringBuffer();
 		out.append("********************\n");
 		out.append("Name of the cake\n");
@@ -126,8 +128,7 @@ public class CakeRecipe
 			}
 			idx = next;
 		} while (idx>0);
-		
-		return out.toString().replace("\n", "\r\n");
+		file.write(out.toString().replace("\n", "\r\n"));
 	}
 	
 	public String toString() {
@@ -212,7 +213,7 @@ public class CakeRecipe
 		}
 		if (imgName != null)
 		{
-			//TODO: Report Error, recipe image not avaliable
+			//TODO: Report Error, recipe image not available
 			if (!(new File(imgDir+imgName)).exists())
 			{
 				imgName = null;

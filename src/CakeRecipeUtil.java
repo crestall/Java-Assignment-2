@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.regex.Pattern;
 
 import javax.swing.text.html.HTMLEditorKit;
@@ -14,7 +16,8 @@ public class CakeRecipeUtil
 {
 
 	public static ArrayList<CakeRecipe> parseDirectory(String directory)
-	{			
+	{
+		//TODO: Check directory is valid
 		File dir = new File(directory);
 
 		String[] children = dir.list();
@@ -86,6 +89,16 @@ public class CakeRecipeUtil
 			if (hits != 0) results.add(new SearchResult<CakeRecipe>(hits ,recipe));
 		}
 		return results;
+	}
+	
+	public static void orderResultsBy(ArrayList<SearchResult<CakeRecipe>> results, SearchResultOrder order) {
+		switch (order) {
+			case RELEVANCE: Collections.sort(results,  new CakeRecipeResultByRelevance());
+			case PREP_TIME: Collections.sort(results,  new CakeRecipeResultByPrepTime());
+			case COOK_TIME: Collections.sort(results,  new CakeRecipeResultByCookTime());
+			case REQUIRED_TIME: Collections.sort(results, new CakeRecipeResultByRequiredTime());
+			default: Collections.sort(results, new CakeRecipeResultByRelevance());
+		}
 	}
 	
 }
