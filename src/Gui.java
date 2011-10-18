@@ -10,6 +10,7 @@ import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -47,13 +48,13 @@ public class Gui {
 	        		
 	        		boolean searchName,searchMethod;
 	        		
-	        		if(searchComboBox.getSelectedItem().equals("Name"))
+	        		if(sortByComboBox.getSelectedItem().equals("Name"))
 	        		{
 	        			searchName = true;
 	        			searchMethod = false;
 	        			
 	        		}else{
-	        			if(searchComboBox.getSelectedItem().equals("Method"))
+	        			if(sortByComboBox.getSelectedItem().equals("Method"))
 		        		{
 		        			searchName = false;
 		        			searchMethod = true;
@@ -90,16 +91,9 @@ public class Gui {
 	// Initialize all swing objects.
     private JFrame f = new JFrame("Recipe Searcher"); //create Frame
     
-    private JScrollPane all_search_results;
-    private JButton searchButton = new JButton(search_action);
-
     
-    
-    private JTextPane title = new JTextPane();
-    
-        
-    private JComboBox<String[]> searchComboBox;
-    private String [] searchOptions = new String[3];
+       
+    private JComboBox<String[]> sortByComboBox;
     
     private JTextField actionName = new JTextField(20);
     private DefaultListModel<CakeRecipe>  theModel =  new DefaultListModel<CakeRecipe>();
@@ -112,35 +106,52 @@ public class Gui {
 	    searchResults = new JList<CakeRecipe>();
 	    searchResults.setModel(theModel);
 	    
-	    title.setFont(new Font("Arial",Font.PLAIN,14));
-		
+	    
+	    JTextPane title = new JTextPane();
+	    title.setFont(new Font("Arial",Font.PLAIN,14));		
 		title.setText("Welcome to our Cake Searcher! \r\n" +					
-					  "by Adrian Cowan and Christopher Restall");		
-		
+					  "by Adrian Cowan and Christopher Restall");				
 		title.setEditable(false);
 	    
 	    RecipeListRenderer therenderer = new RecipeListRenderer();	  
 	    therenderer.setTheGui(f);
 	    searchResults.setCellRenderer(therenderer);
 	    
-	    
+	    JButton searchButton = new JButton(search_action);
 	    searchButton.registerKeyboardAction(search_action,KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0,false),JComponent.WHEN_IN_FOCUSED_WINDOW);
 	    
 	    searchResults.addListSelectionListener(recipeClick);
 	    searchResults.setAutoscrolls(true);
-	
+	    
+	    JScrollPane all_search_results;
 		all_search_results = new JScrollPane(searchResults);
 		all_search_results.setAutoscrolls(true);
 		 
+		String [] sortByOptions = new String[4];
+		sortByOptions[0] = "Relevance";
+		sortByOptions[1] = "Preparation Time";
+		sortByOptions[2] = "Cooking Time";
+		sortByOptions[3] = "Total Time";
 		
-		searchOptions[0] = "Name";
-		searchOptions[1] = "Method";
-		searchOptions[2] = "Both";
 		
-		searchComboBox = new JComboBox(searchOptions);
-	    JLabel combo_label = new JLabel("Please select which attributes you would like to search:");
+		JLabel search_in_label = new JLabel("Please select which attribute you would like to search in:");	
+		
+		
+		JCheckBox nameBox = new JCheckBox();
+		nameBox.setText("Name");
+		
+		JCheckBox methodBox = new JCheckBox();
+		methodBox.setText("Method");
+		
+		JCheckBox ingredientsBox = new JCheckBox();
+		ingredientsBox.setText("Ingredients");
+		
+		
+		sortByComboBox = new JComboBox(sortByOptions);
+	    JLabel combo_label = new JLabel("Please select which attribute you would like to sort by:");	    
 	    
-	    JLabel keywords_label = new JLabel("Please enter your keywords:");
+	    JLabel keywords_label = new JLabel("Please enter your keywords:");	    
+	    
 	    
 	    GroupLayout layout = new GroupLayout(f.getContentPane());	  
 	    
@@ -152,8 +163,18 @@ public class Gui {
 	    		   		.addComponent(title)
 	    		   		.addGroup(	    				   
 	    		   				layout.createSequentialGroup()	    				   		
+	    				   		.addComponent(search_in_label)	    				   					   	
+	    				   		)
+	    				.addGroup(
+	    		    		layout.createSequentialGroup()	    		    		
+	    		    		.addComponent(nameBox,70,80,90)	    		    		
+	    		    		.addComponent(methodBox,70,80,90)	    		    		
+	    		    		.addComponent(ingredientsBox,70,80,90)
+	    		    		)
+	    		   		.addGroup(	    				   
+	    		   				layout.createSequentialGroup()	    				   		
 	    				   		.addComponent(combo_label)
-	    				   		.addComponent(searchComboBox)	    				   	
+	    				   		.addComponent(sortByComboBox)	    				   	
 	    				   		)
 	    				 .addGroup(
 	    						 layout.createSequentialGroup()
@@ -167,10 +188,21 @@ public class Gui {
 	    layout.setVerticalGroup(
     		   layout.createSequentialGroup()
     		   		.addComponent(title,40,45,50)
+    		   		.addGroup(	    				   
+	    		   				layout.createSequentialGroup()	    				   		
+	    				   		.addComponent(search_in_label)
+	    				   			    				   	
+	    				   		)
+	    		    .addGroup(
+	    		    		layout.createParallelGroup()
+	    		    		.addComponent(nameBox)
+	    		    		.addComponent(methodBox)
+	    		    		.addComponent(ingredientsBox)
+	    		    		)	    		    		
     		   		.addGroup(
     		   					layout.createParallelGroup()
     		   					.addComponent(combo_label)	
-    		   					.addComponent(searchComboBox,15,15,20)    		    		  		    		  	
+    		   					.addComponent(sortByComboBox,15,15,20)    		    		  		    		  	
     		   				)
     		    	.addGroup(
     		    				layout.createParallelGroup()
