@@ -12,7 +12,7 @@ public class CakeRecipeUtilTest
 	{
 		ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
 		String[] tokens = {"cake", "butter", "pan", "stir", "blueberry"};
-		ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, true, true);
+		ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, true, true, false);
 		for (SearchResult<CakeRecipe> result:matchingRecipes) {
 			System.out.println(result.item.getName()+" > "+result.hits);
 			if (result.item.getName().equals("Blueberry cake")) return;
