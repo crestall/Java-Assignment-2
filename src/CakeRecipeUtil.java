@@ -71,7 +71,7 @@ public class CakeRecipeUtil
 		return recipes;
 	}
 
-	public static ArrayList<SearchResult<CakeRecipe>> search(ArrayList<CakeRecipe> recipes, String[] tokens, boolean searchName, boolean searchMethod)
+	public static ArrayList<SearchResult<CakeRecipe>> search(ArrayList<CakeRecipe> recipes, String[] tokens, boolean searchName, boolean searchMethod, boolean searchIngredients)
 	{
 		ArrayList<SearchResult<CakeRecipe>> results = new ArrayList<SearchResult<CakeRecipe>>();
 		String[] tokensLower = new String[tokens.length];
@@ -82,6 +82,7 @@ public class CakeRecipeUtil
 			int hits = 0;
 			if (searchName) hits += recipe.countInName(tokensLower);
 			if (searchMethod) hits += recipe.countInMethod(tokensLower);
+			if (searchIngredients) hits += recipe.countInIngredients(tokensLower);
 			if (hits != 0) results.add(new SearchResult<CakeRecipe>(hits ,recipe));
 		}
 		return results;

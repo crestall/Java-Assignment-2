@@ -176,6 +176,22 @@ public class CakeRecipe
 		return hits;
 	}
 
+	public int countInIngredients(String[] tokens)
+	{
+		int hits = 0;
+		for (String step:ingredients) {
+			String stepLower = step.toLowerCase();
+			for (String token:tokens) {
+				int idx = -1;
+				do {
+					idx = stepLower.indexOf(token, idx+1);
+					hits++;
+				} while (idx != -1);
+				hits--;
+			}
+		}
+		return hits;
+	}
 	public boolean isValid()
 	{
 		// TODO Auto-generated method stub
