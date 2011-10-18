@@ -93,11 +93,11 @@ public class CakeRecipeUtil
 	
 	public static void orderResultsBy(ArrayList<SearchResult<CakeRecipe>> results, SearchResultOrder order) {
 		switch (order) {
-			case RELEVANCE: Collections.sort(results,  new CakeRecipeResultByRelevance());
-			case PREP_TIME: Collections.sort(results,  new CakeRecipeResultByPrepTime());
-			case COOK_TIME: Collections.sort(results,  new CakeRecipeResultByCookTime());
-			case REQUIRED_TIME: Collections.sort(results, new CakeRecipeResultByRequiredTime());
-			default: Collections.sort(results, new CakeRecipeResultByRelevance());
+			case RELEVANCE: Collections.sort(results, new CakeRecipeResultByRelevance());break;
+			case PREP_TIME: Collections.sort(results, new CakeRecipeResultByPrepTime());break;
+			case COOK_TIME: Collections.sort(results, new CakeRecipeResultByCookTime());break;
+			case REQUIRED_TIME: Collections.sort(results, new CakeRecipeResultByRequiredTime());break;
+			default: Collections.sort(results, new CakeRecipeResultByRelevance());break;
 		}
 	}
 	

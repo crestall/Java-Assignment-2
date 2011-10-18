@@ -45,8 +45,7 @@ public class Gui extends JFrame{
 	        	String[] tokens = actionName.getText().split(" ");	   
 	        	if(tokens.length <= 5)
 	        	{		        	
-	        		theModel.clear();
-	        		
+	        		theModel.clear();	        		
 	        		boolean searchName,searchMethod,searchIngredients;	        			        			        		
         			searchName = nameBox.getModel().isSelected();
         			searchMethod = methodBox.getModel().isSelected();
@@ -54,7 +53,7 @@ public class Gui extends JFrame{
 	        		
 		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, searchName, searchMethod,searchIngredients);
 
-		        	//Collections.sort(matchingRecipes);
+		        	CakeRecipeUtil.orderResultsBy(matchingRecipes, (SearchResultOrder) sortByComboBox.getSelectedItem());
 		        	
 		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
 		    				 try
@@ -89,8 +88,12 @@ public class Gui extends JFrame{
     private JTextField actionName = new JTextField(20);
     private DefaultListModel<CakeRecipe>  theModel =  new DefaultListModel<CakeRecipe>();
     
+    
+    
+    
     /** Constructor for the GUI */
-    public Gui(){
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Gui(){
 	    searchResults = new JList<CakeRecipe>();
 	    searchResults.setModel(theModel);
 	    
@@ -129,16 +132,10 @@ public class Gui extends JFrame{
 		JLabel search_in_label = new JLabel("Please select which attribute you would like to search in:");	
 		
 		
-		nameBox.setText("Name");
-		
-		
+		nameBox.setText("Name");		
 		methodBox.setText("Method");
-		
-		
 		ingredientsBox.setText("Ingredients");
-		
-		
-		sortByComboBox = new JComboBox(sortByOptions);
+		sortByComboBox = new JComboBox(SearchResultOrder.values());
 		
 	    JLabel combo_label = new JLabel("Please select which attribute you would like to sort by:");	    
 	    
