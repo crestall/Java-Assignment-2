@@ -139,6 +139,7 @@ public class Gui extends JFrame{
 		
 		
 		sortByComboBox = new JComboBox(sortByOptions);
+		
 	    JLabel combo_label = new JLabel("Please select which attribute you would like to sort by:");	    
 	    
 	    JLabel keywords_label = new JLabel("Please enter your keywords:");	    
@@ -151,11 +152,8 @@ public class Gui extends JFrame{
         
 	    layout.setHorizontalGroup(
 	    		   layout.createParallelGroup()
-	    		   		.addComponent(title)
-	    		   		.addGroup(	    				   
-	    		   				layout.createSequentialGroup()	    				   		
-	    				   		.addComponent(search_in_label)	    				   					   	
-	    				   		)
+	    		   		.addComponent(title)	    		   		    				   		
+	    				.addComponent(search_in_label)	    				   					   		    				
 	    				.addGroup(
 		    		    		layout.createSequentialGroup()	    		    		
 		    		    		.addComponent(nameBox,70,80,90)	    		    		
@@ -181,9 +179,8 @@ public class Gui extends JFrame{
     		   		.addComponent(title,40,45,50)
     		   		.addGroup(	    				   
 	    		   				layout.createSequentialGroup()	    				   		
-	    				   		.addComponent(search_in_label)
-	    				   			    				   	
-	    				   		)
+	    				   		.addComponent(search_in_label)	    				   			    				   	
+	    				   	)
 	    		    .addGroup(
 	    		    		layout.createParallelGroup()
 	    		    		.addComponent(nameBox)
