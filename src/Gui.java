@@ -23,10 +23,11 @@ import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
-
-
-public class Gui {
+public class Gui extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JList<CakeRecipe> searchResults;
 	private RecipeViewer recipeViewer = null;
 	
@@ -46,25 +47,13 @@ public class Gui {
 	        	{		        	
 	        		theModel.clear();
 	        		
-	        		boolean searchName,searchMethod;
+	        		boolean searchName,searchMethod,searchIngredients;	        			        			        		
+        			searchName = nameBox.getModel().isSelected();
+        			searchMethod = methodBox.getModel().isSelected();
+        			searchIngredients =ingredientsBox.getModel().isSelected(); 
 	        		
-	        		if(sortByComboBox.getSelectedItem().equals("Name"))
-	        		{
-	        			searchName = true;
-	        			searchMethod = false;
-	        			
-	        		}else{
-	        			if(sortByComboBox.getSelectedItem().equals("Method"))
-		        		{
-		        			searchName = false;
-		        			searchMethod = true;
-		        		}else{
-		        			searchName = true;
-		        			searchMethod = true;
-		        		}
-	        		}
-	        		
-		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, searchName, searchMethod);
+		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, searchName, searchMethod,searchIngredients);
+
 		        	//Collections.sort(matchingRecipes);
 		        	
 		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
@@ -78,8 +67,7 @@ public class Gui {
 		 			        }		    						    					    				
 		    		}
 	        	}else
-	        	{
-	        		
+	        	{	        		
 	        		System.out.println("Too many keywords entered!");	        		
 	        	}
 	        		   
@@ -89,9 +77,12 @@ public class Gui {
 	private ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
 		
 	// Initialize all swing objects.
-    private JFrame f = new JFrame("Recipe Searcher"); //create Frame
+  //  private JFrame f = new JFrame("Recipe Searcher"); //create Frame
     
-    
+
+	private JCheckBox nameBox = new JCheckBox();
+	private JCheckBox methodBox = new JCheckBox();
+	private JCheckBox ingredientsBox = new JCheckBox();
        
     private JComboBox<String[]> sortByComboBox;
     
@@ -100,21 +91,18 @@ public class Gui {
     
     /** Constructor for the GUI */
     public Gui(){
-    	
-    	
-    	
 	    searchResults = new JList<CakeRecipe>();
 	    searchResults.setModel(theModel);
 	    
 	    
 	    JTextPane title = new JTextPane();
-	    title.setFont(new Font("Arial",Font.PLAIN,14));		
+	    title.setFont(new Font("Arial",Font.BOLD,14));		
 		title.setText("Welcome to our Cake Searcher! \r\n" +					
-					  "by Adrian Cowan and Christopher Restall");				
+					  "ID1: #6515258 and ID2: #6515029");				
 		title.setEditable(false);
 	    
 	    RecipeListRenderer therenderer = new RecipeListRenderer();	  
-	    therenderer.setTheGui(f);
+	    therenderer.setTheGui(this);
 	    searchResults.setCellRenderer(therenderer);
 	    
 	    JButton searchButton = new JButton(search_action);
@@ -126,24 +114,27 @@ public class Gui {
 	    JScrollPane all_search_results;
 		all_search_results = new JScrollPane(searchResults);
 		all_search_results.setAutoscrolls(true);
+		
+		nameBox.setSelected(true);
+		methodBox.setSelected(true);
+		ingredientsBox.setSelected(true);
 		 
 		String [] sortByOptions = new String[4];
 		sortByOptions[0] = "Relevance";
 		sortByOptions[1] = "Preparation Time";
 		sortByOptions[2] = "Cooking Time";
-		sortByOptions[3] = "Total Time";
+		sortByOptions[3] = "Required Time";
 		
 		
 		JLabel search_in_label = new JLabel("Please select which attribute you would like to search in:");	
 		
 		
-		JCheckBox nameBox = new JCheckBox();
 		nameBox.setText("Name");
 		
-		JCheckBox methodBox = new JCheckBox();
+		
 		methodBox.setText("Method");
 		
-		JCheckBox ingredientsBox = new JCheckBox();
+		
 		ingredientsBox.setText("Ingredients");
 		
 		
@@ -153,7 +144,7 @@ public class Gui {
 	    JLabel keywords_label = new JLabel("Please enter your keywords:");	    
 	    
 	    
-	    GroupLayout layout = new GroupLayout(f.getContentPane());	  
+	    GroupLayout layout = new GroupLayout(this.getContentPane());	  
 	    
 	    layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
@@ -166,11 +157,11 @@ public class Gui {
 	    				   		.addComponent(search_in_label)	    				   					   	
 	    				   		)
 	    				.addGroup(
-	    		    		layout.createSequentialGroup()	    		    		
-	    		    		.addComponent(nameBox,70,80,90)	    		    		
-	    		    		.addComponent(methodBox,70,80,90)	    		    		
-	    		    		.addComponent(ingredientsBox,70,80,90)
-	    		    		)
+		    		    		layout.createSequentialGroup()	    		    		
+		    		    		.addComponent(nameBox,70,80,90)	    		    		
+		    		    		.addComponent(methodBox,70,80,90)	    		    		
+		    		    		.addComponent(ingredientsBox,70,80,90)
+		    		    		)
 	    		   		.addGroup(	    				   
 	    		   				layout.createSequentialGroup()	    				   		
 	    				   		.addComponent(combo_label)
@@ -212,10 +203,8 @@ public class Gui {
     		    		  )
     		    	.addComponent(all_search_results)
 	    		);
-	    f.getContentPane().setLayout(layout);
-	    f.addWindowListener(new ListenCloseWdw());
-			
-        
+	    getContentPane().setLayout(layout);
+	    addWindowListener(new ListenCloseWdw());
     }
 	
     public class ListenMenuQuit implements ActionListener{
@@ -230,12 +219,11 @@ public class Gui {
         }
     }
 	
-	public void launchFrame(){
-        // Display Frame
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setBounds(0, 0, 500, 500);
-		recipeViewer = new RecipeViewer(f);
-        f.setVisible(true);
+	public void launchFrame(){        
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0, 0, 500, 500);		
+        setVisible(true);
+        recipeViewer = new RecipeViewer(this);
     }
     
    

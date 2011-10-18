@@ -7,30 +7,31 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class RecipeViewer {
+public class RecipeViewer extends JDialog{
 
-	private JDialog f = null;
-
-    private JTextField title = new JTextField();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField title = new JTextField();
     private JTextArea Ingredients = new JTextArea();
     private JTextArea Method = new JTextArea(); 
 	
 	public RecipeViewer(JFrame caller)
 	{
-		f = new JDialog(caller,"RecipeViewer",true);
-		f.setModal(false);
-		f.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+		super(caller,"RecipeViewer",true);	
+		setModal(false);
+		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 	    title.setEditable(false);	     
 	}
 	public void displayCakeRecipe(CakeRecipe theRecipe)
 	{		
-		f.getContentPane().removeAll();
-		
+		getContentPane().removeAll();		
 		title.setText(theRecipe.getName());		
 		title.setFont(new Font("Arial",Font.PLAIN,30));
 		title.setHorizontalAlignment(JTextField.CENTER);
 		title.setSize(300, 100);
-		f.setTitle(theRecipe.getName());
+		setTitle(theRecipe.getName());
 		Method.setLineWrap(true);
 		Ingredients.setLineWrap(true);
 		
@@ -63,7 +64,7 @@ public class RecipeViewer {
 		
 		ImagePanel picture = new ImagePanel(theRecipe.getImageDir() + theRecipe.getImageName());
 				
-	    GroupLayout layout = new GroupLayout(f.getContentPane());	  
+	    GroupLayout layout = new GroupLayout(getContentPane());	  
 	    
 	    layout.setAutoCreateGaps(true);	    
         layout.setAutoCreateContainerGaps(true);        
@@ -93,16 +94,16 @@ public class RecipeViewer {
     		    .addComponent(methodScroll)
 	    		);
 	    
-	    f.getContentPane().setLayout(layout);		
+	    getContentPane().setLayout(layout);		
 		
-	    f.setSize(800, 600);
-	    f.repaint();
-	    f.setVisible(true);
-	    f.revalidate();	    
+	    setSize(800, 600);
+	    repaint();
+	    setVisible(true);
+	    revalidate();	    
 	}
 	
 	public boolean isOpen()
 	{		
-		return f.isVisible();		
+		return isVisible();		
 	}
 }
