@@ -6,17 +6,11 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-
-
-
 
 public class RecipeViewer {
-	
-	
+
 	private JDialog f = null;
-	
-	
+
     private JTextField title = new JTextField();
     private JTextArea Ingredients = new JTextArea();
     private JTextArea Method = new JTextArea(); 
@@ -26,8 +20,7 @@ public class RecipeViewer {
 		f = new JDialog(caller,"RecipeViewer",true);
 		f.setModal(false);
 		f.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-	    title.setEditable(false);	    
-	 
+	    title.setEditable(false);	     
 	}
 	public void displayCakeRecipe(CakeRecipe theRecipe)
 	{		
