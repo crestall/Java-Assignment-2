@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
@@ -35,68 +37,30 @@ public class Gui extends JFrame{
 		public void valueChanged(ListSelectionEvent e) 
 		{
 			if(e.getValueIsAdjusting())
-				recipeViewer.displayCakeRecipe(theModel.get(searchResults.getSelectedIndex()));
+				recipeViewer.displayCakeRecipe(results_list_model.get(searchResults.getSelectedIndex()));
 		}
 	};
 	
-	  private Action search_action = new AbstractAction("Search") {
-			private static final long serialVersionUID = 1L;
-	        public void actionPerformed(ActionEvent evt) {	        		        	
-	        	String[] tokens = actionName.getText().split(" ");	   
-	        	if(tokens.length <= 5)
-	        	{		        	
-	        		theModel.clear();	        		
-	        		boolean searchName,searchMethod,searchIngredients;	        			        			        		
-        			searchName = nameBox.getModel().isSelected();
-        			searchMethod = methodBox.getModel().isSelected();
-        			searchIngredients =ingredientsBox.getModel().isSelected(); 
-	        		
-		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, searchName, searchMethod,searchIngredients);
-
-		        	CakeRecipeUtil.orderResultsBy(matchingRecipes, (SearchResultOrder) sortByComboBox.getSelectedItem());
-		        	
-		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
-		    				 try
-		 			        {		    					     					 		 			        			 			        			 			        	
-		 			        	theModel.addElement(result.item);			 		
-		 			        }
-		    				 catch(Exception e){	
-		    					System.out.println("Exception Occured:" + e.toString());
-		 			        	System.exit(1);
-		 			        }		    						    					    				
-		    		}
-	        	}else
-	        	{	        		
-	        		System.out.println("Too many keywords entered!");	        		
-	        	}
-	        		   
-	        }
-	    };
-	    
+	     
 	private ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
 		
-	// Initialize all swing objects.
-  //  private JFrame f = new JFrame("Recipe Searcher"); //create Frame
-    
-
+	// Initialise all swing objects. 
 	private JCheckBox nameBox = new JCheckBox();
 	private JCheckBox methodBox = new JCheckBox();
-	private JCheckBox ingredientsBox = new JCheckBox();
-       
+	private JCheckBox ingredientsBox = new JCheckBox();       
     private JComboBox<String[]> sortByComboBox;
-    
+    private JComboBox<String[]> ascendingDescending;    
     private JTextField actionName = new JTextField(20);
-    private DefaultListModel<CakeRecipe>  theModel =  new DefaultListModel<CakeRecipe>();
-    
-    
-    
-    
+    private DefaultListModel<CakeRecipe>  results_list_model =  new DefaultListModel<CakeRecipe>();
+  
+        
     /** Constructor for the GUI */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	public Gui(){
-	    searchResults = new JList<CakeRecipe>();
-	    searchResults.setModel(theModel);
+	public Gui(){	    	    
+	    setTitle("Receipe Viewer");
 	    
+	    searchResults = new JList<CakeRecipe>();
+	    searchResults.setModel(results_list_model);
 	    
 	    JTextPane title = new JTextPane();
 	    title.setFont(new Font("Arial",Font.BOLD,14));		
@@ -111,33 +75,34 @@ public class Gui extends JFrame{
 	    JButton searchButton = new JButton(search_action);
 	    searchButton.registerKeyboardAction(search_action,KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0,false),JComponent.WHEN_IN_FOCUSED_WINDOW);
 	    
+	    
+	    String[] ascendingDescdingOptions = new String[2];
+	    ascendingDescdingOptions[0] = "Ascending";
+	    ascendingDescdingOptions[1] = "Descending";
+	    
+	    ascendingDescending = new JComboBox(ascendingDescdingOptions);
+	    JLabel view_results_order = new JLabel("View results in what order:");
+	    
 	    searchResults.addListSelectionListener(recipeClick);
 	    searchResults.setAutoscrolls(true);
 	    
 	    JScrollPane all_search_results;
 		all_search_results = new JScrollPane(searchResults);
-		all_search_results.setAutoscrolls(true);
-		
-		nameBox.setSelected(true);
-		methodBox.setSelected(true);
-		ingredientsBox.setSelected(true);
+		all_search_results.setAutoscrolls(true);				
 		 
-		String [] sortByOptions = new String[4];
-		sortByOptions[0] = "Relevance";
-		sortByOptions[1] = "Preparation Time";
-		sortByOptions[2] = "Cooking Time";
-		sortByOptions[3] = "Required Time";
-		
-		
 		JLabel search_in_label = new JLabel("Please select which attribute you would like to search in:");	
-		
-		
+				
 		nameBox.setText("Name");		
-		methodBox.setText("Method");
-		ingredientsBox.setText("Ingredients");
-		sortByComboBox = new JComboBox(SearchResultOrder.values());
+		nameBox.setSelected(true);
 		
+		methodBox.setText("Method");
+		methodBox.setSelected(true);
+		
+		ingredientsBox.setText("Ingredients");
+		ingredientsBox.setSelected(true);
+						
 	    JLabel combo_label = new JLabel("Please select which attribute you would like to sort by:");	    
+	    sortByComboBox = new JComboBox(SearchResultOrder.values());
 	    
 	    JLabel keywords_label = new JLabel("Please enter your keywords:");	    
 	    
@@ -161,6 +126,11 @@ public class Gui extends JFrame{
 	    		   				layout.createSequentialGroup()	    				   		
 	    				   		.addComponent(combo_label)
 	    				   		.addComponent(sortByComboBox)	    				   	
+	    				   		)
+	    				 .addGroup(	    				   
+	    		   				layout.createSequentialGroup()	    				   		
+	    				   		.addComponent(view_results_order)
+	    				   		.addComponent(ascendingDescending)	    				   	
 	    				   		)
 	    				 .addGroup(
 	    						 layout.createSequentialGroup()
@@ -189,6 +159,11 @@ public class Gui extends JFrame{
     		   					.addComponent(combo_label)	
     		   					.addComponent(sortByComboBox,15,15,20)    		    		  		    		  	
     		   				)
+    		   		.addGroup(	    				   
+	    		   				layout.createParallelGroup()	    				   		
+	    				   		.addComponent(view_results_order)
+	    				   		.addComponent(ascendingDescending,15,15,20)	    				   	
+	    				   		)
     		    	.addGroup(
     		    				layout.createParallelGroup()
     		    				.addComponent(keywords_label)
@@ -220,5 +195,43 @@ public class Gui extends JFrame{
         recipeViewer = new RecipeViewer(this);
     }
     
+	private Action search_action = new AbstractAction("Search") {
+			private static final long serialVersionUID = 1L;
+	        public void actionPerformed(ActionEvent evt) {	        		        	
+	        	String[] tokens = actionName.getText().split(" ");	   
+	        	if(tokens.length <= 5)
+	        	{		        	
+	        		results_list_model.clear();	        		
+	        		boolean searchName,searchMethod,searchIngredients;	        			        			        		
+     			searchName = nameBox.getModel().isSelected();
+     			searchMethod = methodBox.getModel().isSelected();
+     			searchIngredients =ingredientsBox.getModel().isSelected(); 
+	        		
+		        	ArrayList<SearchResult<CakeRecipe>> matchingRecipes = CakeRecipeUtil.search(recipes, tokens, searchName, searchMethod,searchIngredients);
+
+		        	int ascDesc = 1; 
+		        	
+		        	if(ascendingDescending.getSelectedItem() == "Descending")
+		        		ascDesc = -1;
+		        	
+		        	CakeRecipeUtil.orderResultsBy(matchingRecipes, (SearchResultOrder) sortByComboBox.getSelectedItem(), ascDesc);
+		        	
+		        	for (SearchResult<CakeRecipe> result:matchingRecipes) {
+		    				 try
+		 			        {		    					     					 		 			        			 			        			 			        	
+		 			        	results_list_model.addElement(result.item);			 		
+		 			        }
+		    				 catch(Exception e){	
+		    					System.out.println("Exception Occured:" + e.toString());
+		 			        	System.exit(1);
+		 			        }		    						    					    				
+		    		}
+	        	}else
+	        	{	        		
+	        		System.out.println("Too many keywords entered!");	        		
+	        	}
+	        		   
+	        }
+	    };
    
 }

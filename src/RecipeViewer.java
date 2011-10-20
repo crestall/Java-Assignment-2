@@ -15,7 +15,10 @@ public class RecipeViewer extends JDialog{
 	private static final long serialVersionUID = 1L;
 	private JTextField title = new JTextField();
     private JTextArea Ingredients = new JTextArea();
-    private JTextArea Method = new JTextArea(); 
+    private JTextArea Method = new JTextArea();
+    private JTextArea cookingTime = new JTextArea();
+    private JTextArea preparationTime = new JTextArea();
+    
 	
 	public RecipeViewer(JFrame caller)
 	{
@@ -23,16 +26,33 @@ public class RecipeViewer extends JDialog{
 		setModal(false);
 		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 	    title.setEditable(false);	     
+	    Method.setEditable(false);
+	    Ingredients.setEditable(false);
+	    preparationTime.setEditable(false);
+	    cookingTime.setEditable(false);
 	}
 	public void displayCakeRecipe(CakeRecipe theRecipe)
 	{		
-		getContentPane().removeAll();		
+		getContentPane().removeAll();
+		
+		setTitle(theRecipe.getName());
+		
+		cookingTime.setText(String.valueOf(theRecipe.getCookTime())+ " minutes");
+		cookingTime.setBackground(this.getBackground());
+		
+		preparationTime.setText(String.valueOf(theRecipe.getPrepTime()) + " minutes");
+		preparationTime.setBackground(this.getBackground());
+		
+		JLabel cookTimeLabel = new JLabel("Cooking Time:");
+		JLabel prepTimeLabel = new JLabel("Preparation Time:");		
+		
 		title.setText(theRecipe.getName());		
 		title.setFont(new Font("Arial",Font.PLAIN,30));
 		title.setHorizontalAlignment(JTextField.CENTER);
 		title.setSize(300, 100);
-		setTitle(theRecipe.getName());
-		Method.setLineWrap(true);
+		
+		
+		
 		Ingredients.setLineWrap(true);
 		
 		Ingredients.setText("");
@@ -41,16 +61,17 @@ public class RecipeViewer extends JDialog{
 			Ingredients.append(ingredient + "\n");
 		}		
 		
+		Method.setLineWrap(true);
 		Method.setText("");		
 		int step = 1;
 		for(String method_step: theRecipe.getMethod())
 		{
 			Method.append("Step "+ step + ": " + method_step + "\n\n");
 			step++;
-		}
-												
+		}												
 		
 		Ingredients.setAutoscrolls(true);
+		
 		JScrollPane ingredientScroll = new JScrollPane(Ingredients);
 		ingredientScroll.setWheelScrollingEnabled(true);
 		
@@ -71,7 +92,14 @@ public class RecipeViewer extends JDialog{
 	    layout.setHorizontalGroup(
 	    		   layout.createParallelGroup()
 	    		   		.addComponent(title)
-	    		   		.addComponent(ingredients_label)
+	    		   		.addGroup(	    				   
+	    				   	layout.createSequentialGroup()	    				   		
+	    				   		.addComponent(prepTimeLabel)
+	    				   		.addComponent(preparationTime)	
+	    				   		.addComponent(cookTimeLabel)
+	    				   		.addComponent(cookingTime)	    				   		 				   		
+	    				   )
+	    		   		.addComponent(ingredients_label)	    		   		
 	    		   		.addGroup(	    				   
 	    				   	layout.createSequentialGroup()	    				   		
 	    				   		.addComponent(ingredientScroll,150,250,350)
@@ -84,11 +112,18 @@ public class RecipeViewer extends JDialog{
 	    layout.setVerticalGroup(
     		   layout.createSequentialGroup()
     		   	.addComponent(title)
+    		   	.addGroup(	    				   
+	    				   	layout.createParallelGroup()	
+	    				   		.addComponent(prepTimeLabel)
+	    				   		.addComponent(preparationTime) 		
+	    				   		.addComponent(cookTimeLabel)
+	    				   		.addComponent(cookingTime)	    				   				   		
+	    				   )
     		   	.addComponent(ingredients_label)
     		    .addGroup(
     		    		  layout.createParallelGroup()
     		    		  	.addComponent(ingredientScroll)
-    		    		  	.addComponent(picture)    		    		  	  		    		  	
+    		    		  	.addComponent(picture,200,250,300)    		    		  	  		    		  	
     		    		  )	    		      
     		    .addComponent(method_label)
     		    .addComponent(methodScroll)
@@ -97,9 +132,9 @@ public class RecipeViewer extends JDialog{
 	    getContentPane().setLayout(layout);		
 		
 	    setSize(800, 600);
-	    repaint();
+	    repaint();	    
 	    setVisible(true);
-	    revalidate();	    
+	    
 	}
 	
 	public boolean isOpen()

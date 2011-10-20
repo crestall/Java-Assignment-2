@@ -5,6 +5,12 @@ public class CakeRecipeResultByRequiredTime implements Comparator<SearchResult<C
 	private static int COOK_TIME_UNKNOWN = 1000;
 	private static int PREP_TIME_UNKNOWN = 600;
 	
+	private int factor;
+	
+	CakeRecipeResultByRequiredTime(int ascendingFactor){
+		factor = ascendingFactor;
+	}
+	
 	public int compare(SearchResult<CakeRecipe> o1, SearchResult<CakeRecipe> o2)
 	{
 		int totalTime1 = 0;
@@ -33,6 +39,6 @@ public class CakeRecipeResultByRequiredTime implements Comparator<SearchResult<C
 		} else {
 			totalTime2 += o2.item.getPrepTime();
 		}
-		return Integer.compare(totalTime1, totalTime2);
+		return Integer.compare(totalTime1, totalTime2) * factor;
 	}
 }

@@ -69,6 +69,11 @@ public class CakeRecipe
 	{
 		return cookTime;
 	}
+	
+	public int getRequiredTime()
+	{
+		return prepTime+cookTime;
+	}
 
 	public void setCookTime(int cookTime)
 	{
