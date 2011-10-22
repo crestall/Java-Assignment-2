@@ -7,8 +7,8 @@ public class Assign2 {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-
+	public static void main(String[] args)
+	{
 		try {	
 			String directory = args[0];
 			ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory(directory);
