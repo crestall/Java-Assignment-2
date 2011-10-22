@@ -198,31 +198,27 @@ public class CakeRecipe
 		}
 		return hits;
 	}
-	public boolean isValid()
+	public boolean isValid() throws InvalidRecipeException
 	{
-		// TODO Auto-generated method stub
 		if (name == null)
 		{
-			//TODO: Report Error, recipe missing name
-			return false;
+			throw new InvalidRecipeException("no name found");
 		}
 		if (ingredients.size() == 0)
 		{
-			//TODO: Report Error, recipe missing ingredients
-			return false;
+			throw new InvalidRecipeException("no ingredients found");
 		}
 		if (method.size() == 0)
 		{
-			//TODO: Report Error, recipe missing method
-			return false;
+			throw new InvalidRecipeException("no method found");
 		}
 		if (imgName != null)
 		{
-			//TODO: Report Error, recipe image not available
 			if (!(new File(imgDir+imgName)).exists())
 			{
 				imgName = null;
 				imgDir = null;
+				Util.warning("image specified by recipe \""+name+"\" not found");
 			}
 		}
 		return true;
