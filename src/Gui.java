@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -42,7 +41,7 @@ public class Gui extends JFrame{
 	};
 	
 	     
-	private ArrayList<CakeRecipe> recipes = CakeRecipeUtil.parseDirectory("files");
+	private ArrayList<CakeRecipe> recipes;
 		
 	// Initialise all swing objects. 
 	private JCheckBox nameBox = new JCheckBox();
@@ -54,11 +53,12 @@ public class Gui extends JFrame{
     private DefaultListModel<CakeRecipe>  results_list_model =  new DefaultListModel<CakeRecipe>();
   
         
-    /** Constructor for the GUI */
+    /** Constructor for the GUI 
+     * @throws RecipeViewerException */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	public Gui(){	    	    
+	public Gui() throws RecipeViewerException{	    	    
 	    setTitle("Receipe Viewer");
-	    
+		recipes = CakeRecipeUtil.parseDirectory("files");
 	    searchResults = new JList<CakeRecipe>();
 	    searchResults.setModel(results_list_model);
 	    

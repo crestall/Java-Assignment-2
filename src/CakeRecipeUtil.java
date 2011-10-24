@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.regex.Pattern;
 
@@ -15,11 +14,12 @@ import javax.swing.text.html.parser.ParserDelegator;
 public class CakeRecipeUtil
 {
 
-	public static ArrayList<CakeRecipe> parseDirectory(String directory)
+	public static ArrayList<CakeRecipe> parseDirectory(String directory) throws RecipeViewerException
 	{
-		//TODO: Check directory is valid
 		File dir = new File(directory);
-
+		if (!dir.exists())
+			throw new RecipeViewerException("directory not found");
+		
 		String[] children = dir.list();
 		// Compile a regex expression to match HTML or HTM files
 		Pattern isHtml = Pattern.compile(".*[.]html?$");
@@ -44,8 +44,7 @@ public class CakeRecipeUtil
 			}
 			catch (FileNotFoundException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Util.warning("file could not be read, missing: "+file.toString());
 				continue;
 			}
 			CakeRecipe recipe = new CakeRecipe();
@@ -53,23 +52,21 @@ public class CakeRecipeUtil
    			try
 			{
 				parser.parse(reader, new HTMLRecipeParser(recipe), true);
-			}
-			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-   			try
-			{
 				reader.close();
 			}
 			catch (IOException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RecipeViewerException(e.toString());
 			}
-   			if (recipe.isValid())
-   				recipes.add(recipe);
+   			try
+			{
+				if (recipe.isValid())
+					recipes.add(recipe);
+			}
+			catch (InvalidRecipeException e)
+			{
+				Util.warning(e.toString());
+			}
 		}
 		return recipes;
 	}

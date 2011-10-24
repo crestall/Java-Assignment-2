@@ -10,8 +10,13 @@ public class CakeRecipeTest
 	{
 		CakeRecipe recipe = new CakeRecipe();
 		boolean expected = false;
-		
-		assertEquals(expected, recipe.isValid());
+		try {
+			assertEquals(expected, recipe.isValid());
+		}
+		catch (InvalidRecipeException e)
+		{
+			fail(e.toString());
+		}
 	}
 	
 	@Test
@@ -26,8 +31,14 @@ public class CakeRecipeTest
 		recipe.addMethodStep("Step 1");
 		recipe.addMethodStep("Step 2");
 		recipe.addMethodStep("Step 3");
-		
-		assertEquals(expected, recipe.isValid());
+
+		try {
+			assertEquals(expected, recipe.isValid());
+		}
+		catch (InvalidRecipeException e)
+		{
+			fail(e.toString());
+		}
 	}
 
 	@Test
@@ -46,8 +57,14 @@ public class CakeRecipeTest
 		recipe.addMethodStep("Step 3");
 		recipe.setImgDir("./");
 		recipe.setImgName("thisFileDoesNotExist.jpg");
-		
-		assertEquals(expectedValidity, recipe.isValid());
+
+		try {
+			assertEquals(expectedValidity, recipe.isValid());
+		}
+		catch (InvalidRecipeException e)
+		{
+			fail(e.toString());
+		}
 		assertEquals(expectedImageSrc, recipe.getImageDir());
 		assertEquals(expectedImageName, recipe.getImageName());
 	}
@@ -62,7 +79,14 @@ public class CakeRecipeTest
 		recipe.addIngredient("Stuff");
 		recipe.addIngredient("Other Stuff");
 		
-		assertEquals(expectedValidity, recipe.isValid());
+		try
+		{
+			assertEquals(expectedValidity, recipe.isValid());
+		}
+		catch (InvalidRecipeException e)
+		{
+			fail(e.toString());
+		}
 	}
 	
 	@Test
@@ -76,7 +100,13 @@ public class CakeRecipeTest
 		recipe.addMethodStep("Step 2");
 		recipe.addMethodStep("Step 3");
 		
-		assertEquals(expected, recipe.isValid());
+		try {
+			assertEquals(expected, recipe.isValid());
+		}
+		catch (InvalidRecipeException e)
+		{
+			fail(e.toString());
+		}
 	}
 	
 	@Test
@@ -91,6 +121,12 @@ public class CakeRecipeTest
 		recipe.addMethodStep("Step 2");
 		recipe.addMethodStep("Step 3");
 		
-		assertEquals(expected, recipe.isValid());
+		try {
+			assertEquals(expected, recipe.isValid());
+		}
+		catch (InvalidRecipeException e)
+		{
+			fail(e.toString());
+		}
 	}
 }
