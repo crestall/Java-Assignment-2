@@ -6,7 +6,9 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
+/*
+ * RecipeViewer displays a CakeRecipe in a JDialog
+ */
 public class RecipeViewer extends JDialog{
 
     /**
@@ -31,6 +33,7 @@ public class RecipeViewer extends JDialog{
 	    preparationTime.setEditable(false);
 	    cookingTime.setEditable(false);
 	}
+	
 	public void displayCakeRecipe(CakeRecipe theRecipe)
 	{		
 		getContentPane().removeAll();

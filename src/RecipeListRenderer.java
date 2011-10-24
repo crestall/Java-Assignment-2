@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-
+/*
+ * RecipeListRenderer renders a JList full of CakeRecipes. It displays its picture and title.
+ */
 class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> {
 
 	/**
@@ -20,15 +22,7 @@ class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JFrame theGui;
-	
-	
-	public void setTheGui(JFrame theGui) {
-		this.theGui = theGui;
-	}
 
-
-	
 	
 	@Override
 	public Component getListCellRendererComponent(
@@ -45,7 +39,11 @@ class RecipeListRenderer extends JLabel implements ListCellRenderer<CakeRecipe> 
 		return this;
 	}		
 	
-	
+	/*
+	 * resizeImage resizes the cakeRecipe image to 100pixels wide by 50pixels high
+	 * @param thevalue The CakeRecipe whose image you want returned and resized.
+	 * @return BufferedImage this is the resized picture.
+	 */
 	private BufferedImage resizeImage(CakeRecipe thevalue)
 	{
 		BufferedImage resizedImage = new BufferedImage(100, 50,BufferedImage.TYPE_INT_ARGB);		

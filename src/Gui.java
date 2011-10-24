@@ -69,7 +69,7 @@ public class Gui extends JFrame{
 		title.setEditable(false);
 	    
 	    RecipeListRenderer therenderer = new RecipeListRenderer();	  
-	    therenderer.setTheGui(this);
+	    
 	    searchResults.setCellRenderer(therenderer);
 	    
 	    JButton searchButton = new JButton(search_action);
@@ -78,15 +78,14 @@ public class Gui extends JFrame{
 	    
 	    String[] ascendingDescdingOptions = new String[2];
 	    ascendingDescdingOptions[0] = "Ascending";
-	    ascendingDescdingOptions[1] = "Descending";
-	    
+	    ascendingDescdingOptions[1] = "Descending";	    
 	    ascendingDescending = new JComboBox(ascendingDescdingOptions);
 	    JLabel view_results_order = new JLabel("View results in what order:");
 	    
-	    searchResults.addListSelectionListener(recipeClick);
-	    searchResults.setAutoscrolls(true);
 	    
 	    JScrollPane all_search_results;
+	    searchResults.addListSelectionListener(recipeClick);
+	    searchResults.setAutoscrolls(true);	    	    
 		all_search_results = new JScrollPane(searchResults);
 		all_search_results.setAutoscrolls(true);				
 		 
@@ -223,6 +222,7 @@ public class Gui extends JFrame{
 		 			        }
 		    				 catch(Exception e){	
 		    					System.out.println("Exception Occured:" + e.toString());
+		    					System.out.println("Couldn't add Cake Recipe to list!");
 		 			        	System.exit(1);
 		 			        }		    						    					    				
 		    		}
